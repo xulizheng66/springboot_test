@@ -7,9 +7,10 @@
 <body>
 <h1>
     <c:forEach items="${userList}" var="list">
-        <h2> ${list.userId}   ${list.userName}</h2></br>
+        <span>${list.userId}   ${list.userName}</span> <br>
     </c:forEach>
+    <span>${success}</span>
 </h1>
-
+<h1></h1>
 </body>
 </html>

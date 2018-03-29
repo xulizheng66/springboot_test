@@ -7,6 +7,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+
+
 //@Configuration
 //@ComponentScan
 //@EnableAutoConfiguration
@@ -19,6 +21,8 @@ public class Application extends SpringBootServletInitializer {//配置spring mv
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class);
     }
+
+
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class,args);

@@ -8,6 +8,7 @@
         <outputRelativeToContentRoot value="true" />
         <module name="mySpringBoot" />
         <module name="mySpringBoot_webapp" />
+        <module name="springboot_test" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

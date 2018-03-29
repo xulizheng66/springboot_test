@@ -36,7 +36,9 @@ public class UserController {
     public ModelAndView showUserList(HttpServletRequest request){
         List<User> userList = this.findAll();
         request.setAttribute("userList",userList);
-        return new ModelAndView("index");
+        //第一个参数：逻辑视图名，第二个参数：数据模型名，第三个参数：数据模型对象
+        //逻辑视图名在配置文件application.yml 中解析为具体的页面视图
+        //数据模型对象将以数据模型名称为参数名放到request属性中。
+        return new ModelAndView("index","success","列表显示成功");
     }
-
 }
