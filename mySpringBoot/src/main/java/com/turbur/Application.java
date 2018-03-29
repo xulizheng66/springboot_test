@@ -1,5 +1,6 @@
 package com.turbur;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -10,6 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //@ComponentScan
 //@EnableAutoConfiguration
 @SpringBootApplication //代替上面3个注解
+@MapperScan("com.turbur.mapper")
 @EnableTransactionManagement  //开启注解事务管理
 public class Application extends SpringBootServletInitializer {//配置spring mvc
 
@@ -17,7 +19,6 @@ public class Application extends SpringBootServletInitializer {//配置spring mv
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
         return application.sources(Application.class);
     }
-
 
     public static void main(String[] args) {
         SpringApplication.run(Application.class,args);

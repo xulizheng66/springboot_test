@@ -19,3 +19,9 @@ spring:
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123654
+  mvc:
+      view:
+        #页面默认前缀目录
+        prefix: /WEB-INF/pages/jsp/
+        #响应页面默认后缀
+        suffix: .jsp
