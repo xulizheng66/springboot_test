@@ -14,7 +14,7 @@
 
     <groupId>com.turbur</groupId>
     <artifactId>springboot_test</artifactId>
-    <name>springBoot框架练习</name>
+    <name>springBootRoot</name>
     <packaging>war</packaging><!--打包方式-->
     <version>1.0</version>
 

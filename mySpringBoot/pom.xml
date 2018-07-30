@@ -15,6 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+        <packaging>pom</packaging>
     </properties>
     <!--添加依赖包-->
     <dependencies>
@@ -54,6 +55,18 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.4</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.webjars.bower/qrcode -->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>qrcode</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <!--生成二维码-->
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.3</version>
         </dependency>
     </dependencies>
     <build>
