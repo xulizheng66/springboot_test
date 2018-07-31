@@ -1,17 +1,23 @@
 package com.turbur.controller;
 
-import com.turbur.commons.UploadImageUtil;
 import com.turbur.entity.User;
 import com.turbur.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+
 
 @RestController
 public class UserController {
@@ -43,18 +49,41 @@ public class UserController {
         return new ModelAndView("index","success","列表显示成功");
     }
 
-
+    /**
+     * 多文件上传
+     * @param multiRequest
+     * @param request
+     * @return
+     */
     @PostMapping(value = "imgUpload")
-    public ModelAndView imgUpload(File uploadFile){
-        UploadImageUtil imageUtil = new UploadImageUtil();
-        String fileName = "图片名字";
-        String path = "C:\\Users\\xulz\\Desktop";
-        try {
-            imageUtil.uploadImage(uploadFile,fileName,path);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public ModelAndView imgUpload(MultipartHttpServletRequest multiRequest,HttpServletRequest request){
+        Iterator<String> fileNames = multiRequest.getFileNames();//获得所有的文件名
+        List<String> urls = new ArrayList<>();
+        while (fileNames.hasNext()){
+            //迭代，对单个文件进行操作
+            String fileName = fileNames.next();
+            MultipartFile file = multiRequest.getFile(fileName);//根据文件名获取文件
+            // 文件不为空
+            if(!file.isEmpty()) {
+                // 文件存放路径
+                String path = request.getServletContext().getRealPath("/");
+                // 文件名称
+                String name = String.valueOf(new Date().getTime()+"_"+file.getOriginalFilename());
+                File destFile = new File(path,name);
+                // 转存文件
+                try {
+                    file.transferTo(destFile);//把内存中图片写入磁盘
+                } catch (IllegalStateException | IOException e) {
+                    e.printStackTrace();
+                }
+                // 访问的url
+                String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath() + "/" + name;
+                urls.add(url);
+            }
         }
         ModelAndView mv = new ModelAndView();
+        mv.addObject("urls", urls);
+        mv.setViewName("index");
         return mv;
     }
 

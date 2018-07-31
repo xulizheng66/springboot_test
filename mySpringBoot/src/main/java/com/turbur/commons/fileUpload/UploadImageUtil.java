@@ -1,4 +1,4 @@
-package com.turbur.commons;
+package com.turbur.commons.fileUpload;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
