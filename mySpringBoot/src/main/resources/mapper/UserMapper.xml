@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.turbur.mapper.UserMapper" ><!--指定映射所在的命名空间-->
+<mapper namespace="com.turbur.mapper.UserMapper" >
   <resultMap id="BaseResultMap" type="com.turbur.entity.User" >
     <constructor >
       <idArg column="user_id" jdbcType="INTEGER" javaType="java.lang.Integer" />
@@ -14,27 +14,26 @@
   <sql id="Base_Column_List" >
     user_id, user_name, password, credits, last_visit, last_ip
   </sql>
-  <!--id每个映射项唯一，parameterType:传入的参数对象类型，可以是别名，也可以是全限定名-->
-  <!--在映射项中通过#{xxx}绑定指定参数类的属性，支持级联属性，如#{dept.deptId}-->
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+
+  <!--查询全部-->
+  <select id="getAll" resultMap="BaseResultMap" >
     select
     <include refid="Base_Column_List" />
-    from t_user
+    from user
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
     where user_id = #{userId,jdbcType=INTEGER}
   </select>
-
-  <select id="getAll" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    from t_user
-  </select>
-
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from t_user
+    delete from user
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.turbur.entity.User" >
-    insert into t_user (user_id, user_name, password, 
+    insert into user (user_id, user_name, password, 
       credits, last_visit, last_ip
       )
     values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
@@ -42,7 +41,7 @@
       )
   </insert>
   <insert id="insertSelective" parameterType="com.turbur.entity.User" >
-    insert into t_user
+    insert into user
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
         user_id,
@@ -85,7 +84,7 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.turbur.entity.User" >
-    update t_user
+    update user
     <set >
       <if test="userName != null" >
         user_name = #{userName,jdbcType=VARCHAR},
@@ -106,7 +105,7 @@
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.turbur.entity.User" >
-    update t_user
+    update user
     set user_name = #{userName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       credits = #{credits,jdbcType=INTEGER},

@@ -7,6 +7,5 @@ import java.util.List;
 public interface UserService {
 
     List<User> getAll();
-
     void insert(User user);
 }

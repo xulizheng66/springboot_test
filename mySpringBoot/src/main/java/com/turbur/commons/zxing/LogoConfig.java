@@ -1,4 +1,4 @@
-package com.turbur.commons;
+package com.turbur.commons.zxing;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

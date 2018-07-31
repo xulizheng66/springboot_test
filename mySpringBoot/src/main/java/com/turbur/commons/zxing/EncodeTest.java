@@ -1,4 +1,4 @@
-package com.turbur.commons;
+package com.turbur.commons.zxing;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,8 +17,8 @@ public class EncodeTest {
 
     public static void Encode_QR_CODE(String contents) throws IOException, WriterException{
         // 二维码内容  contents
-        int width = 430; // 二维码图片宽度 300
-        int height = 430; // 二维码图片高度300
+        int width = 430; // 二维码图片宽度 430
+        int height = 430; // 二维码图片高度 430
 
         String format = "jpg";// 二维码的图片格式 jpg
 

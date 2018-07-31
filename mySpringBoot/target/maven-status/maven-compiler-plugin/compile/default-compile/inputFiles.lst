@@ -1,6 +1,10 @@
-F:\ideaworkspace_gzfwpt\springboot_test\mySpringBoot\src\main\java\com\turbur\entity\User.java
-F:\ideaworkspace_gzfwpt\springboot_test\mySpringBoot\src\main\java\com\turbur\controller\UserController.java
-F:\ideaworkspace_gzfwpt\springboot_test\mySpringBoot\src\main\java\com\turbur\mapper\UserMapper.java
-F:\ideaworkspace_gzfwpt\springboot_test\mySpringBoot\src\main\java\com\turbur\service\impl\UserServiceImpl.java
-F:\ideaworkspace_gzfwpt\springboot_test\mySpringBoot\src\main\java\com\turbur\Application.java
-F:\ideaworkspace_gzfwpt\springboot_test\mySpringBoot\src\main\java\com\turbur\service\UserService.java
+F:\WorkSpaces\ideaworkspace_test\springboot_test\mySpringBoot\src\main\java\com\turbur\commons\UploadImageUtil.java
+F:\WorkSpaces\ideaworkspace_test\springboot_test\mySpringBoot\src\main\java\com\turbur\service\impl\UserServiceImpl.java
+F:\WorkSpaces\ideaworkspace_test\springboot_test\mySpringBoot\src\main\java\com\turbur\Application.java
+F:\WorkSpaces\ideaworkspace_test\springboot_test\mySpringBoot\src\main\java\com\turbur\commons\zxing\EncodeTest.java
+F:\WorkSpaces\ideaworkspace_test\springboot_test\mySpringBoot\src\main\java\com\turbur\mapper\UserMapper.java
+F:\WorkSpaces\ideaworkspace_test\springboot_test\mySpringBoot\src\main\java\com\turbur\entity\User.java
+F:\WorkSpaces\ideaworkspace_test\springboot_test\mySpringBoot\src\main\java\com\turbur\service\UserService.java
+F:\WorkSpaces\ideaworkspace_test\springboot_test\mySpringBoot\src\main\java\com\turbur\commons\zxing\LogoConfig.java
+F:\WorkSpaces\ideaworkspace_test\springboot_test\mySpringBoot\src\main\java\com\turbur\controller\UserController.java
+F:\WorkSpaces\ideaworkspace_test\springboot_test\mySpringBoot\src\main\java\com\turbur\commons\zxing\MatrixToImageWriter.java

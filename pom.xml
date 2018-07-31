@@ -14,8 +14,7 @@
 
     <groupId>com.turbur</groupId>
     <artifactId>springboot_test</artifactId>
-    <name>springBootRoot</name>
-    <packaging>war</packaging><!--打包方式-->
+    <packaging>pom</packaging><!--打包方式-->
     <version>1.0</version>
 
     <dependencies>
@@ -35,13 +34,11 @@
     </modules>
     <build>
         <plugins>
-            <!-- devtools 热部署插件 -->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <!-- fork 如果没有此配置，devtools 不起作用-->
-                    <fork>true</fork>
+                    <target>1.8</target>
+                    <source>1.8</source>
                 </configuration>
             </plugin>
         </plugins>

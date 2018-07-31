@@ -1,5 +1,5 @@
 server:
-  port: 8550
+  port: 8080
 
 #springboot整合mybatis框架(mybatis总装配文件)
 #加载Mybatis配置文件
@@ -15,7 +15,7 @@ spring:
   application:
     name: mySpringBoot
   datasource:
-    url: jdbc:mysql://localhost:3306/sampledb
+    url: jdbc:mysql://localhost:3306/test
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: 123654

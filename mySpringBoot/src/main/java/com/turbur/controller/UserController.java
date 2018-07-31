@@ -1,13 +1,16 @@
 package com.turbur.controller;
 
+import com.turbur.commons.UploadImageUtil;
 import com.turbur.entity.User;
 import com.turbur.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.List;
 
 @RestController
@@ -18,9 +21,7 @@ public class UserController {
 
     @RequestMapping(value = "/userList")
     public List<User> findAll(){
-
         List<User> users = userService.getAll();
-
         return users;
     }
 
@@ -41,4 +42,20 @@ public class UserController {
         //数据模型对象将以数据模型名称为参数名放到request属性中。
         return new ModelAndView("index","success","列表显示成功");
     }
+
+
+    @PostMapping(value = "imgUpload")
+    public ModelAndView imgUpload(File uploadFile){
+        UploadImageUtil imageUtil = new UploadImageUtil();
+        String fileName = "图片名字";
+        String path = "C:\\Users\\xulz\\Desktop";
+        try {
+            imageUtil.uploadImage(uploadFile,fileName,path);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ModelAndView mv = new ModelAndView();
+        return mv;
+    }
+
 }

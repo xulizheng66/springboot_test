@@ -2,21 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>mySpringBoot</artifactId>
+    <packaging>war</packaging>
+    <version>v1.0</version>
+
     <parent>
         <artifactId>springboot_test</artifactId>
         <groupId>com.turbur</groupId>
         <version>1.0</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mySpringBoot</artifactId>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <packaging>pom</packaging>
-    </properties>
     <!--添加依赖包-->
     <dependencies>
         <!--根据需要，添加不同的Boot Web启动器依赖，由于使用mvc模式，故依赖web-->
@@ -24,7 +21,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-        <!--使支持jsp 和 jstl配置的jar-->
+        <!--使支持jsp 和 jstl配置的依赖-->
         <dependency>
             <groupId>org.apache.tomcat.embed</groupId>
             <artifactId>tomcat-embed-jasper</artifactId>

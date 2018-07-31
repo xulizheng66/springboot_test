@@ -2,17 +2,13 @@ package com.turbur.mapper;
 
 import com.turbur.entity.User;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-/**
- * 接口名称和映射命名空间相同，接口方法和映射元素id相同
- */
 @Mapper
-//@Repository
+@Component
 public interface UserMapper {
-
     int deleteByPrimaryKey(Integer userId);
 
     int insert(User record);
@@ -26,5 +22,4 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     List<User> getAll();
-
 }

@@ -1,6 +1,10 @@
 com\turbur\Application.class
+com\turbur\commons\zxing\MatrixToImageWriter.class
 com\turbur\service\UserService.class
-com\turbur\mapper\UserMapper.class
 com\turbur\controller\UserController.class
 com\turbur\entity\User.class
+com\turbur\commons\zxing\EncodeTest.class
 com\turbur\service\impl\UserServiceImpl.class
+com\turbur\mapper\UserMapper.class
+com\turbur\commons\UploadImageUtil.class
+com\turbur\commons\zxing\LogoConfig.class
