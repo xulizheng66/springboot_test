@@ -18,13 +18,27 @@ spring:
     url: jdbc:mysql://localhost:3306/test
     driver-class-name: com.mysql.jdbc.Driver
     username: root
-    password: 123654
+    password: root
   mvc:
       view:
         #页面默认前缀目录
         prefix: /WEB-INF/pages/jsp/
         #响应页面默认后缀
         suffix: .jsp
+  resources:
+    static-locations: /WEB-INF/resource
+  redis:
+    host: localhost
+    port: 6379
+  session:
+    store-type: redis
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: rabbit
+    password: rabbit
+
+
 
 
 person:

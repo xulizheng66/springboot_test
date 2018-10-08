@@ -12,10 +12,11 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author xulz
  * @Description: ${todo}
- * @date 2018/7/915:42
+ * @date 2018/7/9 15:42
  */
 @Service
 public class RedisUtils {
+
     @Autowired
     private RedisTemplate redisTemplate;
 

@@ -1,8 +1,9 @@
 package com.turbur.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable{
     private Integer userId;
 
     private String userName;
@@ -14,6 +15,8 @@ public class User {
     private Date lastVisit;
 
     private String lastIp;
+
+    static String country = "CN";
 
     public User(Integer userId, String userName, String password, Integer credits, Date lastVisit, String lastIp) {
         this.userId = userId;

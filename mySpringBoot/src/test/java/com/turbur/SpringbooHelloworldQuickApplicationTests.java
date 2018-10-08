@@ -1,5 +1,7 @@
 package com.turbur;
 
+import com.turbur.commons.utils.RedisUtils;
+import com.turbur.entity.Persion;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,27 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class SpringbooHelloworldQuickApplicationTests {
 
+    @Autowired
+    private RedisUtils redisUtils;
+    @Autowired
+    private Persion persion;
+
+    /**
+     * redis的存取
+     */
     @Test
     public void contextLoads() {
+        redisUtils.set("aaa","aaa");
+        System.out.println(redisUtils.get("aaa"));
 
+    }
 
+    /**
+     * 使用yml为bean赋值
+     */
+    @Test
+    public void test() {
+        System.out.println("---------------------"+persion.getLastName());
     }
 
 }
