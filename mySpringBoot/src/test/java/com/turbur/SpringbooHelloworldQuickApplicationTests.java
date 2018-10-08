@@ -37,7 +37,11 @@ public class SpringbooHelloworldQuickApplicationTests {
      */
     @Test
     public void test() {
+
         System.out.println("---------------------"+persion.getLastName());
+        System.out.println("test");
+        System.out.println("test1");
+        System.out.println("111111");
     }
 
 }
