@@ -1,0 +1,40 @@
+package com.xulz.webservice.client;
+
+import com.xulz.webservice.entity.User;
+import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
+
+/**
+ * @description: ${description}
+ * @author: xulz
+ * @create: 2018-11-09 16:52
+ **/
+public class Client {
+
+    public static void main(String args[]) {
+
+        JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
+        org.apache.cxf.endpoint.Client client = dcf.createClient("http://localhost:8899/webservice/user?wsdl");
+        try {
+            //getUser 为接口中定义的方法名称  张三为传递的参数   返回一个Object数组
+            Object[] objects = client.invoke("getUser",10001L);
+            User user = (User) objects[0];
+            System.out.println("++++++++++++++++++++"+user.getUsername());
+            System.out.println("--------------------"+objects[0]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    /*public static void main(String args[]) {
+
+        JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
+        org.apache.cxf.endpoint.Client client = dcf.createClient("http://localhost:8899/webservice/user?wsdl");
+        try {
+            //getName 为接口中定义的方法名称  张三为传递的参数   返回一个Object数组
+            Object[] objects = client.invoke("getName",1L);
+            System.out.println("--------------------"+objects[0]);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
+
+}

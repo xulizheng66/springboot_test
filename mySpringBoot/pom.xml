@@ -72,10 +72,15 @@
             <version>0.1.44-1</version>
         </dependency>
         <!--md5加密 DigestUtils-->
-        <dependency>
+        <!--<dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
             <version>1.8</version>
+        </dependency>-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.10</version>
         </dependency>
         <!--SFTP 依赖-->
         <dependency>
