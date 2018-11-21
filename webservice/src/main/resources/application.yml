@@ -1,7 +1,5 @@
 server:
   port: 8899
-  cxf:
-    path: /services  # 替换默认的/services路径
 
 #springboot整合mybatis框架(mybatis总装配文件)
 #加载Mybatis配置文件
@@ -13,7 +11,10 @@ server:
 #  #定义别名
 #  type-aliases-package: com.turbur.entity
 #数据源
-#spring:
+spring:
+  redis:
+    host: localhost
+    port: 6379
 #  application:
 #    name: mySpringBoot
 #  datasource:
@@ -29,9 +30,7 @@ server:
 #        suffix: .jsp
 #  resources:
 #    static-locations: /WEB-INF/resource
-#  redis:
-#    host: localhost
-#    port: 6379
+
 #  session:
 #    store-type: redis
 #  rabbitmq:
