@@ -92,10 +92,10 @@ public class RestfullController {
 			String firstChart = result.trim().substring(0, 1);
 			if ("{".equals(firstChart)) {
 				JSONObject objects = JSONObject.parseObject(result);
-				return ResponseFormat.retParam(200, objects);
+				return objects;
 			} else if ("[".equals(firstChart)) {
 				JSONArray array = JSONArray.parseArray(result);
-				return ResponseFormat.retParam(200, array);
+				return array;
 			}
 		}
 		return "请求头参数不能为空";
