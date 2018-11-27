@@ -1,4 +1,4 @@
-package com.xulz.webservice.commons;
+package com.gsww.cascade.test;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

@@ -1,6 +1,7 @@
 package com.xulz.webservice.commons;
 
 import com.alibaba.fastjson.JSONObject;
+
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -23,11 +24,11 @@ import java.util.Map;
  */
 public class GetSecretKey {
 
-    static String url = "http://59.255.104.184:8181/sysapi/auth/refreshappsecret";
-    static String rtime = String.valueOf(System.currentTimeMillis());
-    static String rid = "7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-228";
-    static String sid = "s_1200000900000_2109";
-    static String appKey = "52885d4b5f0faf1699e23efd7f480728";
+//    static String url = "http://59.255.104.184:8181/sysapi/auth/refreshappsecret";
+//    static String rtime = String.valueOf(System.currentTimeMillis());
+//    static String rid = "7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-228";
+//    static String sid = "s_1200000900000_2109";
+//    static String appKey = "52885d4b5f0faf1699e23efd7f480728";
 
     /**
      * 根据密钥（appsecret）对 rid，sid 和 rtime 进行 hmacsha256 计算并进行 base64 转码获得 sign 值。
@@ -47,7 +48,6 @@ public class GetSecretKey {
             byte[] keyBytes = appKey.getBytes("UTF-8");
             hmacSha256.init(new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA256"));
 
-            System.out.println("rtime--------------------------------"+rtime);
 
             String inputString = sid + rid + rtime;
             System.out.println("INPUT: " + inputString);
@@ -104,12 +104,15 @@ public class GetSecretKey {
         if ("0".equals(code)) {
             JSONObject jsonObj = JSONObject.parseObject(data);
             String secret = jsonObj.getString("secret");
+            //密钥有效期
             String secretEndTime = jsonObj.getString("secretEndTime");
-            System.out.println("-----------------" + rtime);
+            System.out.println("第一次secret:+++++++++++++++++" + secret);
+            System.out.println("生成密钥时间:rtime--------------------------------"+rtime);
 
             return secret;
         } else {
-            return "系统异常，获取签名失败";
+        	//请求不存在于数据库授权列表中
+            return null;
         }
     }
 
@@ -120,9 +123,33 @@ public class GetSecretKey {
      * @param secretKey
      * @return
      */
-    public static String getRealSecretKey(String appkey, String secretKey) {
-        String realSecretKey = SymmetricEncoder.AESDncode(appkey, secretKey);
-        System.out.println("+++++++++++++++++++++"+realSecretKey);
+    public static String getRealSecretKey(String rtime,String rid,String sid,String appkey, String secretKey) {
+    	
+    	SymmetricEncoder se = new SymmetricEncoder();
+        String appsecret = se.AESDncode(appkey, secretKey);
+    	
+//    	String appsecret = se.AESDncode("d73eb5464bdf8c67de59ecf160a1f7ca","GneUTO9lYEHCWVicmcdUMsw/9mC2mluOZxB3feCV8mFew5yDrHBHPykcy2mUfbF/");
+        String realSecretKey = "";
+        try {
+        	
+        	Mac hmacSha256 = Mac.getInstance("HmacSHA256");
+			byte[] keyBytes = appsecret.getBytes("UTF-8");
+			hmacSha256.init(new SecretKeySpec(keyBytes, 0, keyBytes.length,
+					"HmacSHA256"));
+			String inputString = sid + rid + rtime;
+			System.out.println("INPUT: " + inputString);
+			byte[] hmacSha256Bytes = hmacSha256.doFinal(inputString
+					.getBytes("UTF-8"));
+			String sign = new String(Base64.encodeBase64(hmacSha256Bytes),
+					"UTF-8");
+			System.out.println("rid:" + rid + "\nsid:" + sid + "\nrttime:"
+					+ rtime + "\nsign:" + sign);
+        	
+			realSecretKey = sign;
+        }catch (Exception e) {
+			e.printStackTrace();
+		}
+        System.out.println("sign:+++++++++++++++++++++"+realSecretKey);
         return realSecretKey;
     }
 

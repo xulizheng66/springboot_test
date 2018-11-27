@@ -1,5 +1,5 @@
 server:
-  port: 8899
+  port: 8890
 
 #springboot整合mybatis框架(mybatis总装配文件)
 #加载Mybatis配置文件
