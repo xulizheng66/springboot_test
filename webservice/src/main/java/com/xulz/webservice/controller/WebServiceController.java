@@ -103,10 +103,10 @@ public class WebServiceController {
 		return resultStr;
 	}
 
-	@RequestMapping(value = "/getInfoByFGW", method = RequestMethod.POST)
+	@RequestMapping(value = "/getWebServiceInfoByFGW", method = RequestMethod.POST)
 	@ApiOperation(value = "发展改革委--WEBSERVICE接口调用")
-	public Object getInfoByFGW(
-			@ApiParam(value = "服务url", required = true) @RequestParam(value = "") String serverUrl,
+	public Object getWebServiceInfoByFGW(
+			@ApiParam(value = "url", required = true) @RequestParam(value = "") String serverUrl,
 			@ApiParam(value = "参数", required = true) @RequestParam(value = "") String jsonStr) {
 
 //        String url = "http://59.255.188.8/services/iacinfo?wsdl";

@@ -51,7 +51,7 @@ public class RestfullController {
 	@ApiOperation(value = "住建部-REST接口调用")
 	public Object getRestInfoByZJB(
 			@ApiParam(value = "服务url", required = true, defaultValue = "http://59.255.104.184:8181/httpproxy") @RequestParam(value = "") String serverUrl,
-			@ApiParam(value = "参数(json字符串)", required = true) @RequestParam(value = "") String params,
+			@ApiParam(value = "参数(json格式)", required = true) @RequestParam(value = "") String params,
 			@ApiParam(value = "headersByJson", required = true) @RequestBody HeaderParams headersByJson) {
 		// 设置请求头
 		HttpHeaders headers = new HttpHeaders();
@@ -81,6 +81,7 @@ public class RestfullController {
 //			map.add("apikey", "4028c681606ca20f01606d0c7e030003");
 //			HttpEntity<MultiValueMap<String, String>> formEntity = new HttpEntity<>(map, headers);
 			
+			@SuppressWarnings("unchecked")
 			Map<String,String> map = JSONObject.parseObject(params,Map.class);
 			HttpEntity<Map<String, String>> formEntity = new HttpEntity<>(map, headers);
 

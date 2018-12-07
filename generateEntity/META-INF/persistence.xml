@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+    <persistence-unit name="persistenceUnit">
+        <class>com.example.entity.TFrCzrjfmx</class>
+        <class>com.example.entity.TFrBjxx</class>
+        <class>com.example.entity.TFrCzxx</class>
+        <class>com.example.entity.TFrFzjgbaxx</class>
+        <class>com.example.entity.TFrGqbgxx</class>
+        <class>com.example.entity.TFrNbgqczbgxx</class>
+        <class>com.example.entity.TFrNbshbxxx</class>
+        <class>com.example.entity.TFrNbwzwdxx</class>
+        <class>com.example.entity.TFrNbxgxx</class>
+        <class>com.example.entity.TFrNbxzxkxx</class>
+        <class>com.example.entity.TFrXkxx</class>
+        <properties>
+            <property name="toplink.jdbc.url" value="jdbc:oracle:thin:@//10.18.31.15:1521/dzzwdb"/>
+            <property name="toplink.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+            <property name="hibernate.connection.url" value="jdbc:oracle:thin:@//10.18.31.15:1521/dzzwdb"/>
+            <property name="hibernate.connection.driver_class" value="oracle.jdbc.OracleDriver"/>
+            <property name="openjpa.ConnectionURL" value="jdbc:oracle:thin:@//10.18.31.15:1521/dzzwdb"/>
+            <property name="openjpa.ConnectionDriverName" value="oracle.jdbc.OracleDriver"/>
+            <property name="eclipselink.jdbc.url" value="jdbc:oracle:thin:@//10.18.31.15:1521/dzzwdb"/>
+            <property name="eclipselink.jdbc.driver" value="oracle.jdbc.OracleDriver"/>
+        </properties>
+    </persistence-unit>
+</persistence>
