@@ -23,8 +23,14 @@ import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
+import com.alibaba.fastjson.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.ConnectException;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
@@ -230,6 +236,69 @@ public class HttpUtils implements java.io.Serializable {
 			// throw new Exception("网络连接错误，请检查您的网络！",e);
 			throw new Exception("亲,网络不给力！");
 		}
+	}
+	
+	
+	/**
+	 * http请求过程
+	 * @param requestUrl 请求的url，在服务调用过程中url为获取token的url（格式为ip:port/auth/token）或者是服务调用的url
+	 * @param requestMethod 获取token时，请求方法为POST；调用服务是请求方法依据服务注册时定义。
+	 * @param appIdorSecretKey 获取token时该参数为appId；抵用服务时该参数为SecretKey
+	 * @param currTime 该参数为当前时间
+	 * @param sign 该参数为head参数gateway_sig，由秘钥生成方法gatewaySignEncode生成。
+	 * @return
+	 */
+	public static JSONObject httpRequest(String requestUrl, String requestMethod, String appIdorSecretKey,
+			String currTime, String sign) throws Exception {
+		JSONObject jsonObject = null;
+		StringBuffer buffer = new StringBuffer();
+		InputStream inputStream = null;
+		try {
+			URL url = new URL(requestUrl);
+			HttpURLConnection httpUrlConnection = (HttpURLConnection) url.openConnection();
+			httpUrlConnection.setRequestMethod(requestMethod);
+			httpUrlConnection.setDoOutput(true);
+			httpUrlConnection.setDoInput(true);
+			httpUrlConnection.setRequestProperty("gateway_appid", appIdorSecretKey);
+			httpUrlConnection.setRequestProperty("gateway_rtime", currTime);
+			httpUrlConnection.setRequestProperty("gateway_sig", sign);
+			httpUrlConnection.connect();
+			inputStream = httpUrlConnection.getInputStream();
+			InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
+			BufferedReader bufferReader = new BufferedReader(inputStreamReader);
+			String str = null;
+			while ((str = bufferReader.readLine()) != null) {
+				buffer.append(str);
+			}
+			String buffer2str = buffer.toString();
+			System.out.println("响应数据：" + buffer2str);
+			jsonObject = JSONObject.parseObject(buffer2str);
+			bufferReader.close();
+			inputStreamReader.close();
+			inputStream.close();
+			inputStream = null;
+			httpUrlConnection.disconnect();
+		} catch (ConnectException ce) {
+			System.out.println("Server connect time out!");
+			throw new ConnectException();
+			// ce.printStackTrace();
+		} catch (IOException ioe) {
+			System.out.println("ioexception request error");
+			throw new IOException();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("http request error!");
+			throw new Exception();
+		} finally {
+			try {
+				if (inputStream != null) {
+					inputStream.close();
+				}
+			} catch (IOException ioe) {
+				ioe.printStackTrace();
+			}
+		}
+		return jsonObject;
 	}
 
 }

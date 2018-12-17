@@ -110,10 +110,14 @@ public class GetSecretKey {
             System.out.println("生成密钥时间:rtime--------------------------------"+rtime);
 
             return secret;
-        } else {
+        } else if("-1".equals(code)){
+        	//{"code":"-1","data":"","message":"接口调用失败"}
         	//请求不存在于数据库授权列表中
-            return null;
-        }
+            return code;
+        } else {
+        	//系统异常
+			return null;
+		}
     }
 
     /**

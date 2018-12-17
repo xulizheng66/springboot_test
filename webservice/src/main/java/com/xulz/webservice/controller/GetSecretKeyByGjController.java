@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import sun.java2d.pipe.AAShapePipe;
 
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -56,7 +55,7 @@ public class GetSecretKeyByGjController {
 		} else {
 			// 国家接口获取到的secretKey当天有效
 			String sign = GetSecretKey.getSign(sid, rid, rtime, appkey);
-			if (StringUtils.isNotBlank(sign)) {
+			if (StringUtils.isNotBlank(sign) && !"-1".equals(sign)) {
 				String secretKey = GetSecretKey.getSecretKey(url, rid, sid, rtime, sign);
 				if (StringUtils.isNotBlank(secretKey)) {
 					
@@ -86,8 +85,12 @@ public class GetSecretKeyByGjController {
 						jsonObject.put("message", "sign存入redis失败");
 						return jsonObject;
 					}
-				}else {
+				} else if(StringUtils.isNotBlank(sign) && "-1".equals(sign)){
+					//{"code":"-1","data":"","message":"接口调用失败"}
 					jsonObject.put("message", "请求不存在于数据库授权列表中");
+					return jsonObject;
+				} else {
+					jsonObject.put("message", "系统异常");
 					return jsonObject;
 				}
 			}

@@ -157,6 +157,12 @@
 			<artifactId>sdk</artifactId>
 			<version>1.0.0</version>
 		</dependency>
+		<!-- java 调用webservice接口（asmx） -->
+		<dependency>
+			<groupId>axis</groupId>
+			<artifactId>axis</artifactId>
+			<version>1.4</version>
+		</dependency>
 	</dependencies>
 
 	<build>
