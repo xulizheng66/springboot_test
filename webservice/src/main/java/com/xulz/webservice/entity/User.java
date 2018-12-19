@@ -12,9 +12,11 @@ import java.util.Date;
  **/
 @Data //logbok注解
 public class User implements Serializable {
+	
     private static final long serialVersionUID = -5939599230753662529L;
-    private Long userId;
+    private String userId;
     private String username;
     private String email;
     private Date gmtCreate;
+
 }

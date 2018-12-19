@@ -14,18 +14,20 @@ import java.util.concurrent.TimeUnit;
  * @Description: ${todo}
  * @date 2018/7/915:42
  */
-
+//@Component
 @Service
+@SuppressWarnings("unchecked")
 public class RedisUtils {
 
-    @Autowired
+    @SuppressWarnings("rawtypes")
+	@Autowired
     private RedisTemplate redisTemplate;
 
     /**
      * 写入缓存
      * @param key
      * @param value
-     * @return
+     * @return	
      */
 
     public boolean set(final String key, Object value) {

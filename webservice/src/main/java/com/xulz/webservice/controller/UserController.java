@@ -21,11 +21,31 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/getUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/getUser", method = RequestMethod.POST)
     @ApiOperation(value = "根据用户Id查询对象")
     public User getUser(
-            @ApiParam(value = "用户id", required = false) @RequestParam(value = "userId") Long userId) {
+    		//userId 10001
+            @ApiParam(value = "用户id", required = false) @RequestParam(value = "userId") String userId) {
         return userService.getUser(userId);
     }
-
+    
+    
+    @RequestMapping(value = "/getUser1", method = RequestMethod.POST)
+    @ApiOperation(value = "根据用户Id查询对象")
+    public String getUser1( @RequestParam(value = "userId") String userId) {
+        return "1111111111";
+    }
+    
+    @RequestMapping(value = "/getUser2", method = RequestMethod.POST)
+    @ApiOperation(value = "根据用户Id查询对象")
+    public String getUser2() {
+    	return "2222222222";
+    }
+    
+    @RequestMapping(value = "/getUser3", method = RequestMethod.POST, headers="sign=abc")
+    @ApiOperation(value = "根据用户Id查询对象")
+    public String getUser3(@RequestParam(value = "userId") String userId) {
+    	return "3333333333";
+    }
+   
 }

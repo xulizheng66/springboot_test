@@ -21,23 +21,24 @@ import java.util.Map;
 
 @Component
 public class UserServiceImpl implements UserService {
-    private Map<Long, User> userMap = new HashMap<>();
+    private Map<String, User> userMap = new HashMap<>();
     public UserServiceImpl() {
-        System.out.println("向实体类插入数据");
+//        System.out.println("向实体类插入数据");
+        
         User user = new User();
-        user.setUserId(10001L);
+        user.setUserId("10001");
         user.setUsername("xulz1");
         user.setEmail("xulz1@qq.com");
         user.setGmtCreate(new Date());
         userMap.put(user.getUserId(), user);
         user = new User();
-        user.setUserId(10002L);
+        user.setUserId("10002");
         user.setUsername("xulz2");
         user.setEmail("xulz2@qq.com");
         user.setGmtCreate(new Date());
         userMap.put(user.getUserId(), user);
         user = new User();
-        user.setUserId(10003L);
+        user.setUserId("10003");
         user.setUsername("xulz3");
         user.setEmail("xulz3@qq.com");
         user.setGmtCreate(new Date());
@@ -45,12 +46,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String getName(Long userId) {
+    public String getName(String userId) {
         return "xulz-" + userId;
     }
 
     @Override
-    public User getUser(Long userId) {
+    public User getUser(String userId) {
         return userMap.get(userId);
     }
 }

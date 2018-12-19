@@ -14,7 +14,7 @@ import javax.jws.WebService;
 @WebService
 public interface UserService {
     @WebMethod
-    String getName(@WebParam(name = "userId") Long userId);
+    String getName(@WebParam(name = "userId") String userId);
     @WebMethod
-    User getUser(@WebParam(name = "userId") Long userId);
+    User getUser(@WebParam(name = "userId") String userId);
 }

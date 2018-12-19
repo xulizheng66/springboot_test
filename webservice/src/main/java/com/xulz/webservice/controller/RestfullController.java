@@ -97,6 +97,8 @@ public class RestfullController {
 			} else if ("[".equals(firstChart)) {
 				JSONArray array = JSONArray.parseArray(result);
 				return array;
+			} else {
+				return result;
 			}
 		}
 		return "请求头参数不能为空";
@@ -134,17 +136,17 @@ public class RestfullController {
 		String org_name = mzbParams.getOrg_name();
 		String usc_code = mzbParams.getUsc_code();
 		// 业务逻辑处理
-		if (Constants.MZB_DR.equals(type)) {
+		if (Constants.MZB_DR.equalsIgnoreCase(type)) {
 			// 单人
 			openServiceParam.addParam("name_man", name_man); // 姓名
 			openServiceParam.addParam("cert_num_man", cert_num_man);// 身份证号
-		} else if (Constants.MZB_SR.equals(type)) {
+		} else if (Constants.MZB_SR.equalsIgnoreCase(type)) {
 			// 双人
 			openServiceParam.addParam("name_man", name_man);// 男方姓名
 			openServiceParam.addParam("cert_num_man", cert_num_man);// 男方身份证号
 			openServiceParam.addParam("name_woman", name_woman);// 女方姓名
 			openServiceParam.addParam("cert_num_woman", cert_num_woman);// 女方身份证号
-		} else if (Constants.MZB_FR.equals(type)) {
+		} else if (Constants.MZB_FR.equalsIgnoreCase(type)) {
 			// 社会团体法人登记证书查询
 			openServiceParam.addParam("org_name", org_name);// 社会组织名称
 			openServiceParam.addParam("usc_code", usc_code); // 统一信用代码
