@@ -34,7 +34,8 @@ public class CxfConfig {
      * 注册请求接口为servlet
      * @return
      */
-    @Bean
+    @SuppressWarnings({ "rawtypes", "unchecked" })
+	@Bean
     public ServletRegistrationBean disServlet() {
         //方法名不可以为disPatchServlet 否则项目不能启动
         return new ServletRegistrationBean(new CXFServlet(), "/webservice/*");
@@ -57,7 +58,6 @@ public class CxfConfig {
     }
 
     //多类业务的Endpoints，只要在CxfConfig文件继续添加Endpoint 和相应的WebService实现即可
-    /** * Another Webservice of Mine. * @return */
     /*@Bean
     public AnotherService anotherService() {
         return new AnotherServiceImpl();

@@ -57,7 +57,7 @@ public class GetSecretKeyByGjController {
 			String sign = GetSecretKey.getSign(sid, rid, rtime, appkey);
 			if (StringUtils.isNotBlank(sign) && !"-1".equals(sign)) {
 				String secretKey = GetSecretKey.getSecretKey(url, rid, sid, rtime, sign);
-				if (StringUtils.isNotBlank(secretKey)) {
+				if (StringUtils.isNotBlank(secretKey) && !"-1".equals(secretKey)) {
 					
 					// 使用redis缓存 jsonObject,并设置有效期
 					long current = System.currentTimeMillis();// 当前时间毫秒数
@@ -85,7 +85,7 @@ public class GetSecretKeyByGjController {
 						jsonObject.put("message", "sign存入redis失败");
 						return jsonObject;
 					}
-				} else if(StringUtils.isNotBlank(sign) && "-1".equals(sign)){
+				} else if(StringUtils.isNotBlank(sign) && "-1".equals(secretKey)){
 					//{"code":"-1","data":"","message":"接口调用失败"}
 					jsonObject.put("message", "请求不存在于数据库授权列表中");
 					return jsonObject;

@@ -1,41 +1,43 @@
 server:
   port: 8899
 
-#springboot整合mybatis框架(mybatis总装配文件)
-#加载Mybatis配置文件
-#mybatis:
-#  #指定 mapper 映射文件的位置
-#  mapper-locations: classpath:mapper/*Mapper.xml
-#  #指定sql映射文件
-#  config-location: classpath:mapper/config/sqlMapConfig.xml
-#  #定义别名
-#  type-aliases-package: com.turbur.entity
-#数据源
 spring:
   redis:
     host: localhost
     port: 6379
-#  application:
-#    name: mySpringBoot
-#  datasource:
-#    url: jdbc:mysql://localhost:3306/test
-#    driver-class-name: com.mysql.jdbc.Driver
-#    username: root
-#    password: root
-#  mvc:
-#      view:
-#        #页面默认前缀目录
-#        prefix: /WEB-INF/pages/jsp/
-#        #响应页面默认后缀
-#        suffix: .jsp
-#  resources:
-#    static-locations: /WEB-INF/resource
-
-#  session:
-#    store-type: redis
-#  rabbitmq:
-#    host: localhost
-#    port: 5672
-#    username: rabbit
-#    password: rabbit
-
+    
+# 自定义配置
+com:
+ mzb:
+  authUrl: http://59.255.104.184:8181/sysapi/auth/refreshappsecret
+   #社会团体法人（兰州新区）
+  fr_lzxq:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-257
+    sid: s_12100000000018032A_3942
+    appKey: f2a2d99d53f6a18231ca4a2f251fc774
+   #社会团体法人（武威）
+  fr_ww: 
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-177
+    sid: s_12100000000018032A_3942
+    appKey: c96d54af3fd61251a61cc2c70776fa7d
+   #单人（甘肃省人民政府)
+  dr_srmzf:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-141
+    sid: s_X01201000200000000_4817
+    appKey: 4a7051d57869b805adf092f794f017ad
+   #双人（甘肃省人民政府）
+  sr_srmzf:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-141
+    sid: s_X01201000200000000_4818
+    appKey: f41a8d56c0e57e048e1f17753c838049
+   #双人（甘肃省公安厅）
+  sr_sgat:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-221
+    sid: s_X01201000200000000_4818
+    appKey: 0b3920397de1dfdd3c18aaaa313d1f30
+    #低保（甘肃省人力资源和社会保障厅）
+  db_srst:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-313
+    sid: s_X01201000200000000_4353
+    appKey: 5641bcc9f726dea769e7f0434a82050f
+  
