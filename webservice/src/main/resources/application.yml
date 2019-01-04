@@ -5,7 +5,15 @@ spring:
   redis:
     host: localhost
     port: 6379
-    
+  mvc:
+    view:
+      #页面默认前缀目录
+      prefix: /WEB-INF/pages/jsp/
+      #响应页面默认后缀
+      suffix: .jsp
+  #静态资源路径
+  resources:
+    static-locations: /WEB-INF/layuiadmin/
 # 自定义配置
 com:
  mzb:
