@@ -179,10 +179,14 @@ public class GetSecretKeyByFwjhController {
 	@RequestMapping(value = "/getAuth", method = RequestMethod.POST)
 	@ApiOperation(value = "获取访问服务鉴权")
 	public Object getAuth(
-			@ApiParam(value = "获取token的url", required = true, defaultValue = "http://10.50.108.42/proxy/auth/token") @RequestParam(value = "") String requestUrl,
+			@ApiParam(value = "获取token的url", required = true, defaultValue = "http://29.8.101.19:5000/auth/token") @RequestParam(value = "") String requestUrl,
 			@ApiParam(value = "appId", required = true) @RequestParam(value = "") String appId,
 			@ApiParam(value = "appKey", required = true) @RequestParam(value = "") String appKey) {
 
+		// 武威地址
+		// 29.8.101.19:5000
+		// 内网地址
+		// 10.50.108.42
 		String gateway_rtime = String.valueOf(System.currentTimeMillis());
 		String gateway_sig = "";
 		try {

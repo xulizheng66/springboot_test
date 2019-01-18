@@ -375,7 +375,8 @@
 	        //1 获取token 2人口库基准信息  3人口库身份核查  4工商局基准信息  5工商局法人核查
 	        if('1' == type){
 		        var params = {
-		        	"requestUrl": "http://10.50.108.42/proxy/auth/token",
+		        	//"requestUrl": "http://10.50.108.42/proxy/auth/token",
+		        	"requestUrl": "http://29.8.101.19:5000/auth/token",
 	        		"appId": $("input[name=appId]").val(),
 	                "appKey": $("input[name=appKey]").val()
 		        };

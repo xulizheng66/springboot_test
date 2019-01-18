@@ -50,8 +50,7 @@ public class InterfaceByFwjhController {
 
 		String gateway_rtime = String.valueOf(System.currentTimeMillis());
 		String gateway_sig = "";
-		try {
-			gateway_sig = GetSecretKeyByFwjh.gatewaySignEncode(appId, appKey, gateway_rtime);
+		try {			gateway_sig = GetSecretKeyByFwjh.gatewaySignEncode(appId, appKey, gateway_rtime);
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
