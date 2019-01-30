@@ -11,7 +11,9 @@
   <appender name="logFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <Prudent>true</Prudent>
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <!-- Linux 系统 -->
       <!-- <FileNamePattern>/home/mzb/%d{yyyy-MM-dd}.%i.log</FileNamePattern> -->
+      <!-- Windos 系统 -->
       <FileNamePattern>c:/mzb/logs/%d{yyyy-MM-dd}.%i.log</FileNamePattern>
       <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
       	<maxFileSize>300MB</maxFileSize>
