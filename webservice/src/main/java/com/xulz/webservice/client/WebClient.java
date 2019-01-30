@@ -138,6 +138,7 @@ public class WebClient {
 		String aa = sx.getInfo(people);
 		System.out.println("aa:" + aa);
 		soapRequestData.append(aa);
+		
 		soapRequestData.append("</web:in0>");
 		soapRequestData.append("<web:in1>gxzxjkcs</web:in1>");
 		soapRequestData.append("<web:in2>cLv6jMAaevpC3jFb7/84Ew==</web:in2>");
