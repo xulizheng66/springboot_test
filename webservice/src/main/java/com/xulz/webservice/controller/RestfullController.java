@@ -661,7 +661,7 @@ public class RestfullController {
 	
 	@RequestMapping(value = "/getRestBzfwhhxxInfoByMzbWithLzs", method = RequestMethod.POST)
 	@ApiOperation(value = "民政部-REST接口调用(殡葬服务火化信息查询-兰州市)")
-	public JSONObject getRestDbInfoByMzbWithSrst1(@RequestBody MzbParams mzbParams) {
+	public JSONObject getRestBzfwhhxxInfoByMzbWithLzs(@RequestBody MzbParams mzbParams) {
 		JSONObject result = new JSONObject();
 		String type = Constants.MZB_BZFW;
 		if (!StringUtils.isNoneBlank(mzbParams.getId_card(),mzbParams.getName())) {
