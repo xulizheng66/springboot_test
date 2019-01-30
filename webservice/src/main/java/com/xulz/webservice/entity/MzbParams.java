@@ -16,7 +16,7 @@ public class MzbParams {
 	private String cert_num_woman;//女方身份证号
 	private String org_name;// 社会组织名称
 	private String usc_code;// 统一信用代码
-	//低保对象信息
+	//低保对象信息 和 殡葬服务火化信息
 	private String id_card;//身份证号
 	private String name;//姓名
 	

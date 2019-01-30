@@ -16,6 +16,8 @@ public class Constants {
     public static final String MZB_SR = "sr";//双人
     public static final String MZB_FR = "fr";//法人
     public static final String MZB_DB = "db";//低保
+    public static final String MZB_BZFW = "bzfw";//殡葬服务
+    
     
 
 }

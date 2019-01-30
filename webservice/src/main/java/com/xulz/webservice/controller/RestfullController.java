@@ -99,6 +99,13 @@ public class RestfullController {
 	private String db_srst_sid;
 	@Value("${com.mzb.db_srst.appKey}")
 	private String db_srst_appKey;
+	//殡葬服务火化信息(兰州市)
+	@Value("${com.mzb.bzfw_lzs.rid}")
+	private String bzfw_lzs_rid;
+	@Value("${com.mzb.bzfw_lzs.sid}")
+	private String bzfw_lzs_sid;
+	@Value("${com.mzb.bzfw_lzs.appKey}")
+	private String bzfw_lzs_appKey;
 	
 	@RequestMapping(value = "/getRestInfoByZJB", method = RequestMethod.POST)
 	@ApiOperation(value = "住建部-REST接口调用")
@@ -518,8 +525,11 @@ public class RestfullController {
 					//低保对象信息
 					openServiceParam.addParam("id_card",id_card);// 身份证号
 					openServiceParam.addParam("name",name); //姓名
-
-				}
+				} else if (Constants.MZB_BZFW.equalsIgnoreCase(type)) {
+					//殡葬服务火化信息
+					openServiceParam.addParam("id_card",id_card);// 身份证号
+					openServiceParam.addParam("name",name); //逝者姓名
+				} 
 				
 				// 分页参数
 				openServiceParam.addParam("start", "0");// 起始页
@@ -641,6 +651,24 @@ public class RestfullController {
 			return result;
 		}
 		JSONObject restInfo = getRestInfoByMzbWithPublic(db_srst_rid, db_srst_sid, db_srst_appKey, mzbParams, type);
+		if (null != restInfo && StringUtils.isNotBlank(restInfo.getString("message"))) {
+			result.put("message", "系统异常");
+			return result;
+		} else {
+			return restInfo;
+		}
+	}
+	
+	@RequestMapping(value = "/getRestBzfwhhxxInfoByMzbWithLzs", method = RequestMethod.POST)
+	@ApiOperation(value = "民政部-REST接口调用(殡葬服务火化信息查询-兰州市)")
+	public JSONObject getRestDbInfoByMzbWithSrst1(@RequestBody MzbParams mzbParams) {
+		JSONObject result = new JSONObject();
+		String type = Constants.MZB_BZFW;
+		if (!StringUtils.isNoneBlank(mzbParams.getId_card(),mzbParams.getName())) {
+			result.put("message", "参数错误，请核实");
+			return result;
+		}
+		JSONObject restInfo = getRestInfoByMzbWithPublic(bzfw_lzs_rid, bzfw_lzs_sid, bzfw_lzs_appKey, mzbParams, type);
 		if (null != restInfo && StringUtils.isNotBlank(restInfo.getString("message"))) {
 			result.put("message", "系统异常");
 			return result;

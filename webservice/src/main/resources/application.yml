@@ -48,4 +48,9 @@ com:
     rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-313
     sid: s_X01201000200000000_4353
     appKey: 5641bcc9f726dea769e7f0434a82050f
+    #殡葬服务火化信息(兰州市)
+  bzfw_lzs:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-226
+    sid: s_12100000000018032A_3939
+    appKey: 4052face4cdf93f1b0f1575cbd52c9af
   
