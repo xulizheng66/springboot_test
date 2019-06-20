@@ -110,7 +110,7 @@ public class RestfullController {
 	@RequestMapping(value = "/getRestInfoByZJB", method = RequestMethod.POST)
 	@ApiOperation(value = "住建部-REST接口调用")
 	public Object getRestInfoByZJB(
-			@ApiParam(value = "服务url", required = true, defaultValue = "http://59.255.104.184:8181/httpproxy") @RequestParam(value = "") String serverUrl,
+			@ApiParam(value = "服务url", required = true, defaultValue = "http://59.255.105.32:8181/httpproxy") @RequestParam(value = "") String serverUrl,
 			@ApiParam(value = "参数(json格式)", required = true) @RequestParam(value = "") String params,
 			@ApiParam(value = "headersByJson", required = true) @RequestBody HeaderParams headersByJson) {
 		// 设置请求头
@@ -312,7 +312,7 @@ public class RestfullController {
 	 * @return
 	 */
 	public JSONObject getSecretKeyByNation(
-			@ApiParam(value = "url（获取签名地址）", required = true, defaultValue = "http://59.255.104.184:8181/sysapi/auth/refreshappsecret") @RequestParam(value = "") String url,
+			@ApiParam(value = "url（获取签名地址）", required = true, defaultValue = "http://59.255.105.32:8181/sysapi/auth/refreshappsecret") @RequestParam(value = "") String url,
 			@ApiParam(value = "rid（请求者身份标识）", required = true) @RequestParam(value = "") String rid,
 			@ApiParam(value = "sid（服务编码）", required = true) @RequestParam(value = "") String sid,
 			@ApiParam(value = "appkey（服务授权码）", required = true) @RequestParam(value = "") String appkey) {

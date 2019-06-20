@@ -35,7 +35,7 @@ public class GetSecretKeyByGjController {
 	@RequestMapping(value = "/getSecretKeyByGj", method = RequestMethod.POST)
 	@ApiOperation(value = "获取密钥")
 	public JSONObject getSecretKeyByGj(
-			@ApiParam(value = "url（获取签名地址）", required = true, defaultValue = "http://59.255.104.184:8181/sysapi/auth/refreshappsecret") @RequestParam(value = "") String url,
+			@ApiParam(value = "url（获取签名地址）", required = true, defaultValue = "http://59.255.105.32:8181/sysapi/auth/refreshappsecret") @RequestParam(value = "") String url,
 			@ApiParam(value = "rid（请求者身份标识）", required = true) @RequestParam(value = "") String rid,
 			@ApiParam(value = "sid（服务编码）", required = true) @RequestParam(value = "") String sid,
 			@ApiParam(value = "appkey（服务授权码）", required = true) @RequestParam(value = "") String appkey) {

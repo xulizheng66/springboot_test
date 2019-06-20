@@ -24,7 +24,7 @@ import java.util.Map;
  */
 public class GetSecretKey {
 
-//    static String url = "http://59.255.104.184:8181/sysapi/auth/refreshappsecret";
+//    static String url = "http://59.255.105.32:8181/sysapi/auth/refreshappsecret";
 //    static String rtime = String.valueOf(System.currentTimeMillis());
 //    static String rid = "7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-228";
 //    static String sid = "s_1200000900000_2109";

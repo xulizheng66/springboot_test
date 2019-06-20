@@ -19,34 +19,32 @@ public class RestTemplateConfig {
 
     @Bean
     @ConditionalOnMissingBean({RestTemplate.class})
-    public RestTemplate restTemplate(ClientHttpRequestFactory factory){
-    	
-    	RestTemplate restTemplate = new RestTemplate(createFactory());
+    public RestTemplate restTemplate(ClientHttpRequestFactory factory) {
+
+        RestTemplate restTemplate = new RestTemplate(createFactory());
         List<HttpMessageConverter<?>> converterList = restTemplate.getMessageConverters();
-        
+
         HttpMessageConverter<?> converterTarget = null;
         for (HttpMessageConverter<?> item : converterList) {
-          if (StringHttpMessageConverter.class == item.getClass())
-          {
-            converterTarget = item;
-            break;
-          }
+            if (StringHttpMessageConverter.class == item.getClass()) {
+                converterTarget = item;
+                break;
+            }
         }
         if (null != converterTarget) {
-          converterList.remove(converterTarget);
+            converterList.remove(converterTarget);
         }
         converterList.add(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
-        
         return restTemplate;
-    	
+
     }
 
     @Bean
     public ClientHttpRequestFactory createFactory() {
-      SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-      factory.setReadTimeout(10000);//单位为ms
-      factory.setConnectTimeout(10000);//单位为ms
-      return factory;
+        SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
+        factory.setReadTimeout(20000);//单位为ms
+        factory.setConnectTimeout(20000);//单位为ms
+        return factory;
     }
-    
+
 }

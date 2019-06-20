@@ -1,5 +1,5 @@
 server:
-  port: 8898
+  port: 8899
 
 spring:
   redis:
@@ -17,7 +17,7 @@ spring:
 # 自定义配置
 com:
  mzb:
-  authUrl: http://59.255.104.184:8181/sysapi/auth/refreshappsecret
+  authUrl: http://59.255.105.32:8181/sysapi/auth/refreshappsecret
    #社会团体法人（兰州新区）
   fr_lzxq:
     rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-257

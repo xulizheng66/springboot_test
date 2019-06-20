@@ -22,7 +22,7 @@ public class PeopleTest {
 	public static String refreshappsecret() {
 		String resultStr = "";
 		// 公安部基准核查
-		String url = "http://59.255.104.184:8181/sysapi/auth/refreshappsecret";
+		String url = "http://59.255.105.32:8181/sysapi/auth/refreshappsecret";
 		String rtime = String.valueOf(System.currentTimeMillis());
 		String rid = "7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-228";
 		String sid = "s_1200000900000_2108";
@@ -91,7 +91,7 @@ public class PeopleTest {
 //					+ TimeHelper.getCurrentTime().replaceAll("-", "")
 //							.replaceAll(" ", "").replaceAll(":", ""));
 			
-			String url = "http://59.255.104.184:8181/wsproxy";
+			String url = "http://59.255.105.32:8181/wsproxy";
 			Map<String, String> map = new HashMap<String, String>();
 //			map.put("number1", "1");
 //			map.put("number2", "2");

@@ -1,7 +1,7 @@
 package com.xulz.webservice.commons;
 
 public class UnescapeUtil {
-	//&#x编码转换成汉字（java）
+	// &#x编码转换成汉字（java）
 		public static String  unescape (String src){  
 			StringBuffer tmp = new StringBuffer();  
 		    tmp.ensureCapacity(src.length());  

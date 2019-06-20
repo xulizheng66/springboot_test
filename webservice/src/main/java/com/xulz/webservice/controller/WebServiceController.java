@@ -14,6 +14,7 @@ import org.apache.axis.client.Service;
 import org.apache.axis.encoding.XMLType;
 import org.apache.axis.message.MessageElement;
 import org.apache.axis.types.Schema;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.cxf.endpoint.Client;
 import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,8 @@ import io.swagger.annotations.ApiParam;
 @RestController
 public class WebServiceController {
 
-//	@Autowired
-//	private RestTemplate restTemplate;
+	@Autowired
+	private RestTemplate restTemplate;
 	@Autowired
 	private RedisUtils redisUtils;
 
@@ -57,7 +58,7 @@ public class WebServiceController {
 			"application/xml;charset=UTF-8" })
 	@ApiOperation(value = "人口库-WEBSERVICE接口调用")
 	public Object getWebServiceInfoByPeople(
-			final @ApiParam(value = "url", required = true, defaultValue = "http://59.255.104.184:8181/wsproxy") @RequestParam(value = "") String url,
+			final @ApiParam(value = "url", required = true, defaultValue = "http://59.255.105.32:8181/wsproxy") @RequestParam(value = "") String url,
 			final @ApiParam(value = "查询参数对象", required = true) @RequestBody People peopleParams,
 			final @ApiParam(value = "查询类型type(基本信息：jbxx,身份核查：sfhc)", required = true) @RequestParam(value = "") String type,
 			final @ApiParam(value = "whiteListIp", required = true) @RequestParam(value = "") String whiteListIp,
@@ -138,8 +139,7 @@ public class WebServiceController {
 		JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
 		Client client = dcf.createClient(serverUrl);
 		// 需要密码的情况需要加上用户名和密码
-		// client.getOutInterceptors().add(new
-		// ClientLoginInterceptor(USER_NAME,PASS_WORD));
+//		 client.getOutInterceptors().add(new ClientLoginInterceptor(USER_NAME,PASS_WORD));
 		Object[] objects = new Object[0];
 		try {
 			// invoke("方法名",参数1,参数2,参数3....);
@@ -236,9 +236,9 @@ public class WebServiceController {
 			String result = "";
 			result = messageElement.toString().replaceAll("&gt;", ">");
 			result = result.replaceAll("&lt;", "<").replaceAll("&quot;", "");
-			//&#x编码转换成汉字
+			// &#x编码转换成汉字
 			result = UnescapeUtil.unescape(result);
-		    System.out.println("result is:::" + result);	
+		    System.out.println("result is:::" + result);
 
 		} catch (ServiceException e) {
 			e.printStackTrace();

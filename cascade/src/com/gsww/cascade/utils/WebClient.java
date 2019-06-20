@@ -7,6 +7,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
 /**
  * 测试web客户端调用类
  * @author xiexq
@@ -16,6 +19,7 @@ public class WebClient {
 	
 	public static String getSoapXML(String wsdlLocation,String namespace,String methodName ,
 			Map<String, String> patameterMap,String rid,String sid,String rtime,String sign) throws Exception{
+		
 		
 		URL url = new URL(wsdlLocation);
 		URLConnection conn = url.openConnection();
