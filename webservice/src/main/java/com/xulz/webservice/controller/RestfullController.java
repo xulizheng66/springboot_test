@@ -57,6 +57,8 @@ public class RestfullController {
 	//获取国家鉴权地址
 	@Value("${com.mzb.authUrl}")
     private String authUrl;
+	@Value("${com.mzb.callUrl}")
+    private String callUrl;
 	// #社会团体法人（兰州新区）
 	@Value("${com.mzb.fr_lzxq.rid}")
 	private String fr_lzxq_rid;

@@ -18,6 +18,7 @@ spring:
 com:
  mzb:
   authUrl: http://59.255.105.32:8181/sysapi/auth/refreshappsecret
+  callUrl: http://59.255.105.32:8181/httpproxy
    #社会团体法人（兰州新区）
   fr_lzxq:
     rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-257

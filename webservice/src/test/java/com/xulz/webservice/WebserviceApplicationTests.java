@@ -14,10 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 @SpringBootTest
 public class WebserviceApplicationTests {
 
-	@Test
+	/*@Test
 	public void contextLoads() {
 		System.out.println("11111111111111111111111111111");
-	}
+	}*/
 
 	/**
 	 * 动态调用方式

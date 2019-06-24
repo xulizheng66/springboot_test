@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.xulz</groupId>
-    <artifactId>webservice</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <!-- 应用jsp页面时，需要打war包，用java -jar 也能启动 -->
-    <!-- <packaging>war</packaging> -->
-    <packaging>jar</packaging>
+	<groupId>com.xulz</groupId>
+	<artifactId>webservice</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<!-- 应用jsp页面时，需要打war包，用java -jar 也能启动 -->
+	<!-- <packaging>war</packaging> -->
+	<packaging>jar</packaging>
 
-    <name>webservice</name>
-    <description>Demo project for Spring Boot</description>
+	<name>webservice</name>
+	<description>Demo project for Spring Boot</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -21,11 +21,11 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <cxf.version>3.3.2</cxf.version>
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<cxf.version>3.1.6</cxf.version>
 
         <httpclient.version>4.4.1</httpclient.version>
     </properties>
@@ -190,6 +190,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <!-- 如果打成jar包，引入第三方jar路径在本项目时必须添加，否则打包不能启动 -->
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                </configuration>
             </plugin>
         </plugins>
     </build>
