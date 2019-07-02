@@ -1,5 +1,6 @@
 package com.xulz.webservice.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.xulz.webservice.commons.GetSecretKey;
 import com.xulz.webservice.commons.RedisUtils;
@@ -11,10 +12,7 @@ import io.swagger.annotations.ApiParam;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigurationPackage;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
@@ -124,7 +122,23 @@ public class GetSecretKeyByGjController {
 		return jsonObject;
 	}
 	
-	
+	@GetMapping("get")
+	public JSONObject get(){
+		JSONObject object = new JSONObject();
+		object.put("aaaa","111111");
+		object.put("bbbb",222222);
+		boolean isOK = redisUtils.set("object", object, 10L, TimeUnit.MINUTES);
+		if (isOK){
+			JSONObject o = new JSONObject();
+			Object object1 = redisUtils.get("object");
+			if (object1 instanceof JSONObject){
+				o = (JSONObject)object1;
+			}
+			return o;
+		}
+		return null;
+	}
+
 	public static void main(String[] args) {
 		
 //		long current = System.currentTimeMillis();// 当前时间毫秒数
