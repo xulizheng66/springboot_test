@@ -30,7 +30,7 @@ import java.util.Map;
 
 /**
  * @author xulz
- * @Description: ${todo}
+ * @Description: 国家 webservice 接口调用
  * @date 2018/11/1618:37
  */
 

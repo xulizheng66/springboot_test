@@ -32,6 +32,11 @@ import java.net.URLConnection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author xulz
+ * @Description: 服务聚合平台接口调用
+ * @date 2018/11/1717:32
+ */
 @Api("服务聚合平台接口调用")
 @RestController
 public class InterfaceByFwjhController {

@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * @author xulz
- * @Description: 国家接口获取密钥
+ * @Description: 获取国家接口鉴权
  * @date 2018/11/1717:32
  */
 
