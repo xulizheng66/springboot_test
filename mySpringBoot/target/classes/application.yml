@@ -20,11 +20,11 @@ spring:
     username: root
     password: root
   mvc:
-      view:
-        #页面默认前缀目录
-        prefix: /WEB-INF/pages/jsp/
-        #响应页面默认后缀
-        suffix: .jsp
+    view:
+      #页面默认前缀目录
+      prefix: /WEB-INF/pages/jsp/
+      #响应页面默认后缀
+      suffix: .jsp
   resources:
     static-locations: /WEB-INF/resource
   redis:

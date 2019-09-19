@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 
 
-
 /**
  * @author xulz
  * @Description: 图片上传工具类
@@ -17,7 +16,8 @@ public class UploadImageUtil {
     private Long width;
     private Long height;
 
-    public UploadImageUtil() {  }
+    public UploadImageUtil() {
+    }
 
     public UploadImageUtil(String fileType, Long maxSize, Long width, Long height) {
         this.fileType = fileType;
@@ -104,6 +104,7 @@ public class UploadImageUtil {
 
     /**
      * 清除文件
+     *
      * @param path
      */
     public void clear(String path) {

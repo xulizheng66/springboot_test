@@ -167,18 +167,19 @@ public class HttpClientHelper {
 
     /**
      * 根据url下载文件
+     *
      * @param urlString
      * @param filename
      * @param savePath
      * @throws Exception
      */
-    public static void downloadFile(String urlString, String filename,String savePath) throws Exception {
+    public static void downloadFile(String urlString, String filename, String savePath) throws Exception {
         // 构造URL
         URL url = new URL(urlString);
         // 打开连接
         URLConnection con = url.openConnection();
         //设置请求超时为10s
-        con.setConnectTimeout(10*1000);
+        con.setConnectTimeout(10 * 1000);
         // 输入流
         InputStream is = con.getInputStream();
 
@@ -187,11 +188,11 @@ public class HttpClientHelper {
         // 读取到的数据长度
         int len;
         // 输出的文件流
-        File sf=new File(savePath);
-        if(!sf.exists()){
+        File sf = new File(savePath);
+        if (!sf.exists()) {
             sf.mkdirs();
         }
-        OutputStream os = new FileOutputStream(sf.getPath()+"\\"+filename);
+        OutputStream os = new FileOutputStream(sf.getPath() + "\\" + filename);
         // 开始读取
         while ((len = is.read(bs)) != -1) {
             os.write(bs, 0, len);

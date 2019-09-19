@@ -21,6 +21,6 @@ public class Application extends SpringBootServletInitializer {//配置spring mv
     }
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class,args);
+        SpringApplication.run(Application.class, args);
     }
 }

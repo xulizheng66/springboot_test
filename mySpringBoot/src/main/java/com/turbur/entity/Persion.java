@@ -10,8 +10,7 @@ import java.util.Map;
 /**
  * @author xulz
  * @Description: 将配置文件中配置的每一个属性的值，映射到这个组件中
- * @ConfigurationProperties：告诉SpringBoot将本类中的所有属和配置文件中相关的配置进行绑定；
- * prefix = "person"：配置文件中哪个下面的所有属性进行一一映射
+ * @ConfigurationProperties：告诉SpringBoot将本类中的所有属和配置文件中相关的配置进行绑定； prefix = "person"：配置文件中哪个下面的所有属性进行一一映射
  * @date 2018/8/13 10:28
  */
 @Component
@@ -23,7 +22,7 @@ public class Persion {
     private Boolean boss;
     private Date birth;
     //getter and setter
-    private Map<String,Object> maps;
+    private Map<String, Object> maps;
     private List<Object> lists;
     private Dog dog;
 

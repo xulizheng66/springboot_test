@@ -3,6 +3,7 @@ package com.turbur.commons.zxing;
 import java.io.File;
 import java.io.IOException;
 import java.util.Hashtable;
+
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -15,7 +16,7 @@ import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
  */
 public class EncodeTest {
 
-    public static void Encode_QR_CODE(String contents) throws IOException, WriterException{
+    public static void Encode_QR_CODE(String contents) throws IOException, WriterException {
         // 二维码内容  contents
         int width = 430; // 二维码图片宽度 430
         int height = 430; // 二维码图片高度 430

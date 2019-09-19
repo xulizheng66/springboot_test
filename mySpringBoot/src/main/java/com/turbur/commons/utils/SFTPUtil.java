@@ -14,15 +14,25 @@ public class SFTPUtil {
     private ChannelSftp sftp;
 
     private Session session;
-    /** SFTP 登录用户名*/
+    /**
+     * SFTP 登录用户名
+     */
     private String username;
-    /** SFTP 登录密码*/
+    /**
+     * SFTP 登录密码
+     */
     private String password;
-    /** 私钥 */
+    /**
+     * 私钥
+     */
     private String privateKey;
-    /** SFTP 服务器地址IP地址*/
+    /**
+     * SFTP 服务器地址IP地址
+     */
     private String host;
-    /** SFTP 端口*/
+    /**
+     * SFTP 端口
+     */
     private int port;
 
 
@@ -46,13 +56,14 @@ public class SFTPUtil {
         this.privateKey = privateKey;
     }
 
-    public SFTPUtil(){}
+    public SFTPUtil() {
+    }
 
 
     /**
      * 连接sftp服务器
      */
-    public void login(){
+    public void login() {
         try {
             JSch jsch = new JSch();
             if (privateKey != null) {
@@ -82,7 +93,7 @@ public class SFTPUtil {
     /**
      * 关闭连接 server
      */
-    public void logout(){
+    public void logout() {
         if (sftp != null) {
             if (sftp.isConnected()) {
                 sftp.disconnect();
@@ -98,25 +109,26 @@ public class SFTPUtil {
 
     /**
      * 将输入流的数据上传到sftp作为文件。文件完整路径=basePath+directory
-     * @param basePath  服务器的基础路径
-     * @param directory  上传到该目录
-     * @param sftpFileName  sftp端文件名
+     *
+     * @param basePath     服务器的基础路径
+     * @param directory    上传到该目录
+     * @param sftpFileName sftp端文件名
      * @param
      */
-    public void upload(String basePath,String directory, String sftpFileName, InputStream input) throws SftpException{
+    public void upload(String basePath, String directory, String sftpFileName, InputStream input) throws SftpException {
         try {
             sftp.cd(basePath);
             sftp.cd(directory);
         } catch (SftpException e) {
             //目录不存在，则创建文件夹
-            String [] dirs=directory.split("/");
-            String tempPath=basePath;
-            for(String dir:dirs){
-                if(null== dir || "".equals(dir)) continue;
-                tempPath+="/"+dir;
-                try{
+            String[] dirs = directory.split("/");
+            String tempPath = basePath;
+            for (String dir : dirs) {
+                if (null == dir || "".equals(dir)) continue;
+                tempPath += "/" + dir;
+                try {
                     sftp.cd(tempPath);
-                }catch(SftpException ex){
+                } catch (SftpException ex) {
                     sftp.mkdir(tempPath);
                     sftp.cd(tempPath);
                 }
@@ -128,11 +140,12 @@ public class SFTPUtil {
 
     /**
      * 下载文件。
-     * @param directory 下载目录
+     *
+     * @param directory    下载目录
      * @param downloadFile 下载的文件
-     * @param saveFile 存在本地的路径
+     * @param saveFile     存在本地的路径
      */
-    public void download(String directory, String downloadFile, String saveFile) throws SftpException, FileNotFoundException{
+    public void download(String directory, String downloadFile, String saveFile) throws SftpException, FileNotFoundException {
         if (directory != null && !"".equals(directory)) {
             sftp.cd(directory);
         }
@@ -141,14 +154,13 @@ public class SFTPUtil {
     }
 
 
-
-
     /**
      * 删除文件
-     * @param directory 要删除文件所在目录
+     *
+     * @param directory  要删除文件所在目录
      * @param deleteFile 要删除的文件
      */
-    public void delete(String directory, String deleteFile) throws SftpException{
+    public void delete(String directory, String deleteFile) throws SftpException {
         sftp.cd(directory);
         sftp.rm(deleteFile);
     }
@@ -156,6 +168,7 @@ public class SFTPUtil {
 
     /**
      * 列出目录下的文件
+     *
      * @param directory 要列出的目录
      * @param
      */
@@ -170,7 +183,7 @@ public class SFTPUtil {
         File file = new File("D:\\图片\\t0124dd095ceb042322.jpg");
         InputStream is = new FileInputStream(file);
 
-        sftp.upload("基础路径","文件路径", "test_sftp.jpg", is);
+        sftp.upload("基础路径", "文件路径", "test_sftp.jpg", is);
         sftp.logout();
     }
 }

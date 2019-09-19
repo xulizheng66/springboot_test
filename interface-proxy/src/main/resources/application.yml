@@ -1,0 +1,73 @@
+server:
+  port: 8899
+
+spring:
+  redis:
+    host: localhost
+    port: 6379
+  mvc:
+    view:
+      #页面默认前缀目录
+      prefix: /WEB-INF/pages/jsp/
+      #响应页面默认后缀
+      suffix: .jsp
+  #静态资源路径
+  resources:
+    static-locations: /WEB-INF/layuiadmin/
+# 自定义配置
+com:
+  # 交通厅
+  jtt:
+    restClienturl: http://59.219.195.5:6080/DATACENTERPro/api
+    requestPath: /dataShare/getZWResource
+  # 民政部
+  mzb:
+    authUrl: http://59.255.105.32:8181/sysapi/auth/refreshappsecret
+    callUrl: http://59.255.105.32:8181/httpproxy
+    # 社会团体法人（兰州新区）
+  fr_lzxq:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-257
+    sid: s_12100000000018032A_3942
+    appKey: f2a2d99d53f6a18231ca4a2f251fc774
+    # 社会团体法人（武威）
+  fr_ww:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-177
+    sid: s_12100000000018032A_3942
+    appKey: c96d54af3fd61251a61cc2c70776fa7d
+    # 单人（甘肃省人民政府)
+  dr_srmzf:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-141
+    sid: s_X01201000200000000_4817
+    appKey: 4a7051d57869b805adf092f794f017ad
+    # 双人（甘肃省人民政府）
+  sr_srmzf:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-141
+    sid: s_X01201000200000000_4818
+    appKey: f41a8d56c0e57e048e1f17753c838049
+    # 双人（甘肃省公安厅）
+  sr_sgat:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-221
+    sid: s_X01201000200000000_4818
+    appKey: 0b3920397de1dfdd3c18aaaa313d1f30
+    # 低保对象（甘肃省人力资源和社会保障厅）
+  db_srst:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-313
+    sid: s_X01201000200000000_4353
+    appKey: 5641bcc9f726dea769e7f0434a82050f
+    # 殡葬服务火化信息(兰州市)
+  bzfw_lzs:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-226
+    sid: s_12100000000018032A_3939
+    appKey: 4052face4cdf93f1b0f1575cbd52c9af
+    # 全国留守儿童和困境儿童信息(扶贫办)
+  lset_fpb:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-480
+    sid: s_X01201000200000000_4352
+    appKey: 38ff8aa00953a529a2da0102031dc738
+    # 低保对象(扶贫办)
+  db_fpb:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-480
+    sid: s_X01201000200000000_4353
+    appKey: aac71ba26ae180e3672e11183a31fe3b
+
+

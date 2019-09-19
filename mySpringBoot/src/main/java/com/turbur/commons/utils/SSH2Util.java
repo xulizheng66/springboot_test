@@ -22,14 +22,10 @@ public class SSH2Util {
     /**
      * 创建一个连接
      *
-     * @param host
-     *            地址
-     * @param user
-     *            用户名
-     * @param password
-     *            密码
-     * @param port
-     *            ssh2端口
+     * @param host     地址
+     * @param user     用户名
+     * @param password 密码
+     * @param port     ssh2端口
      */
     public SSH2Util(String host, String user, String password, int port) {
         this.host = host;
@@ -88,12 +84,9 @@ public class SSH2Util {
     /**
      * 上传文件
      *
-     * @param localPath
-     *            本地路径，若为空，表示当前路径
-     * @param localFile
-     *            本地文件名，若为空或是“*”，表示目前下全部文件
-     * @param remotePath
-     *            远程路径，若为空，表示当前路径，若服务器上无此目录，则会自动创建
+     * @param localPath  本地路径，若为空，表示当前路径
+     * @param localFile  本地文件名，若为空或是“*”，表示目前下全部文件
+     * @param remotePath 远程路径，若为空，表示当前路径，若服务器上无此目录，则会自动创建
      * @throws Exception
      */
     public void putFile(String localPath, String localFile, String remotePath)
@@ -207,7 +200,7 @@ public class SSH2Util {
     }
 
     public static void main(String[] args) throws Exception {
-        SSH2Util ssh2Util = new SSH2Util("127.0.0.1", "root","root", 22);
-        ssh2Util.putFile("C:\\Users\\lenovo\\Desktop", "99999.sh","/usr/ksybak/tomcats");
+        SSH2Util ssh2Util = new SSH2Util("127.0.0.1", "root", "root", 22);
+        ssh2Util.putFile("C:\\Users\\lenovo\\Desktop", "99999.sh", "/usr/ksybak/tomcats");
     }
 }

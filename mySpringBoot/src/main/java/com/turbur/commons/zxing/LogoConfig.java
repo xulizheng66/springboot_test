@@ -10,15 +10,16 @@ import java.io.IOException;
 /**
  * 二维码 添加 logo图标 处理的方法,
  * 模仿微信自动生成二维码效果，有圆角边框，logo和二维码间有空白区，logo带有灰色边框
- * @author Administrator sangwenhao
  *
+ * @author Administrator sangwenhao
  */
 public class LogoConfig {
 
     /**
      * 主要处理logo图标已达到和微信自动的二维码相近的效果
-     *
+     * <p>
      * 设置 logo
+     *
      * @param matrixImage 源二维码图片
      * @return 返回带有logo的二维码图片
      * @throws IOException
@@ -39,22 +40,22 @@ public class LogoConfig {
          */
         BufferedImage logo = ImageIO.read(new File("C:\\Users\\xulz\\Desktop\\timg.jfif"));
         //开始绘制图片
-        g2.drawImage(logo,matrixWidth/5*2,matrixHeigh/5*2, matrixWidth/5, matrixHeigh/5, null);//绘制
-        BasicStroke stroke = new BasicStroke(5,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
+        g2.drawImage(logo, matrixWidth / 5 * 2, matrixHeigh / 5 * 2, matrixWidth / 5, matrixHeigh / 5, null);//绘制
+        BasicStroke stroke = new BasicStroke(5, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         g2.setStroke(stroke);// 设置笔画对象
 
         //指定弧度的圆角矩形
-        RoundRectangle2D.Float round = new RoundRectangle2D.Float(matrixWidth/5*2, matrixHeigh/5*2, matrixWidth/5, matrixHeigh/5,20,20);
+        RoundRectangle2D.Float round = new RoundRectangle2D.Float(matrixWidth / 5 * 2, matrixHeigh / 5 * 2, matrixWidth / 5, matrixHeigh / 5, 20, 20);
         g2.setColor(Color.white);
         g2.draw(round);// 绘制圆弧矩形
         //设置logo 有一道灰色边框
-        BasicStroke stroke2 = new BasicStroke(1,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND);
+        BasicStroke stroke2 = new BasicStroke(1, BasicStroke.CAP_ROUND, BasicStroke.JOIN_ROUND);
         g2.setStroke(stroke2);// 设置笔画对象
-        RoundRectangle2D.Float round2 = new RoundRectangle2D.Float(matrixWidth/5*2+2, matrixHeigh/5*2+2, matrixWidth/5-4, matrixHeigh/5-4,20,20);
-        g2.setColor(new Color(128,128,128));
+        RoundRectangle2D.Float round2 = new RoundRectangle2D.Float(matrixWidth / 5 * 2 + 2, matrixHeigh / 5 * 2 + 2, matrixWidth / 5 - 4, matrixHeigh / 5 - 4, 20, 20);
+        g2.setColor(new Color(128, 128, 128));
         g2.draw(round2);// 绘制圆弧矩形
         g2.dispose();
-        matrixImage.flush() ;
-        return matrixImage ;
+        matrixImage.flush();
+        return matrixImage;
     }
 }

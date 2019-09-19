@@ -27,7 +27,7 @@ public class SpringbooHelloworldQuickApplicationTests {
      */
     @Test
     public void contextLoads() {
-        redisUtils.set("aaa","aaa");
+        redisUtils.set("aaa", "aaa");
         System.out.println(redisUtils.get("aaa"));
 
     }
@@ -38,7 +38,7 @@ public class SpringbooHelloworldQuickApplicationTests {
     @Test
     public void test() {
 
-        System.out.println("---------------------"+persion.getLastName());
+        System.out.println("---------------------" + persion.getLastName());
         System.out.println("test");
         System.out.println("test1");
         System.out.println("111111");

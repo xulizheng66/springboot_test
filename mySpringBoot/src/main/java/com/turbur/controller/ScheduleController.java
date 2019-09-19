@@ -24,8 +24,8 @@ public class ScheduleController {
      */
     //每1分钟执行一次
     @Scheduled(cron = "0 */1 *  * * * ")
-    public void reportCurrentTime(){
-        System.out.println ("Scheduling Tasks Examples: The time is now " + TimeHelper.getCurrentTime());
+    public void reportCurrentTime() {
+        System.out.println("Scheduling Tasks Examples: The time is now " + TimeHelper.getCurrentTime());
     }
 
 }
