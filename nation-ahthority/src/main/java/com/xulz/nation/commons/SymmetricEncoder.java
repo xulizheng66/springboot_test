@@ -1,22 +1,16 @@
-package com.gsww.cascade.test;
+package com.xulz.nation.commons;
 
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
+
+import javax.crypto.*;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Scanner;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.KeyGenerator;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
-
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 /*
  * AES对称加密和解密
@@ -84,10 +78,13 @@ public class SymmetricEncoder {
             KeyGenerator keygen = KeyGenerator.getInstance("AES");
             // 2.根据ecnodeRules规则初始化密钥生成器
             // 生成一个128位的随机源,根据传入的字节数组
+            // linux系统
             //新增下面两行，处理 Linux 操作系统下随机数生成不一致的问题
             SecureRandom secureRandom = SecureRandom.getInstance("SHA1PRNG");
             secureRandom.setSeed(encodeRules.getBytes());
             keygen.init(128, secureRandom);
+            // windows系统
+//			keygen.init(128, new SecureRandom(encodeRules.getBytes()));
             // 3.产生原始对称密钥
             SecretKey original_key = keygen.generateKey();
             // 4.获得原始对称密钥的字节数组

@@ -119,6 +119,7 @@ public class MzbRestController {
 
     /**
      * 民政部-REST接口调用(公共方法)
+     *
      * @param rid    请求者标识
      * @param sid    接口编码
      * @param appKey 发送方签名(appKey)
@@ -248,6 +249,9 @@ public class MzbRestController {
         return resultJson;
     }
 
+    /**
+     * 民政部发送请求的方法
+     */
     public String sendRequest(RequestParams requestParam, OpenServiceClient client) throws ClientException {
         String context = requestParam.getContext();
         String version = requestParam.getVersion();
@@ -394,9 +398,9 @@ public class MzbRestController {
         return restInfo;
     }
 
+
     /**
      * 系统参数校验
-     *
      * @param params
      * @return
      */

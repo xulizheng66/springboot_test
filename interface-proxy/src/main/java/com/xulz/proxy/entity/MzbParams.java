@@ -10,7 +10,7 @@ import lombok.Data;
 @Data
 public class MzbParams {
 
-    // 固有参数
+    // 获取国家鉴权固有参数
     private String rid;
     private String sid;
     private String appkey;

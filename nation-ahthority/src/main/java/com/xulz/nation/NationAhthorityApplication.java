@@ -1,4 +1,4 @@
-package com.xulz.nationa;
+package com.xulz.nation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
