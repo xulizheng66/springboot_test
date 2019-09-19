@@ -18,7 +18,7 @@ spring:
 com:
   # 交通厅
   jtt:
-    restClienturl: http://59.219.195.5:6080/DATACENTERPro/api
+    restClientUrl: http://59.219.195.5:6080/DATACENTERPro/api
     requestPath: /dataShare/getZWResource
   # 民政部
   mzb:
