@@ -1,5 +1,7 @@
 package com.xulz.proxy.service;
 
+import cn.hutool.core.date.DateUnit;
+import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.xulz.proxy.commons.GetSecretKey;
 import com.xulz.proxy.commons.RedisUtils;
@@ -11,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Date;
 import java.util.TimeZone;
 import java.util.concurrent.TimeUnit;
 
@@ -44,9 +47,9 @@ public class SecretKeyService {
         JSONObject jsonObject = new JSONObject();
         String rtime = String.valueOf(System.currentTimeMillis());
         // 首先去redis 中去取，存在则直接返回，不存在再调国家接口
-        boolean exists = redisUtils.exists(rid + "@" + sid + "@" + appkey);
+        boolean exists = redisUtils.exists("nation:" + rid + "@" + sid + "@" + appkey);
         if (exists) {
-            NationInterface info = (NationInterface) redisUtils.get(rid + "@" + sid + "@" + appkey);
+            NationInterface info = (NationInterface) redisUtils.get("nation:" + rid + "@" + sid + "@" + appkey);
             jsonObject.put("sign", info.getRealSecretKey());
             // redis中获取到的rtime 和 sign
             log.info("sign>>>>>>>>>>>>" + info.getRealSecretKey());
@@ -57,13 +60,13 @@ public class SecretKeyService {
             if (StringUtils.isNotBlank(sign) && !"-1".equals(sign)) {
                 String secretKey = GetSecretKey.getSecretKey(url, rid, sid, rtime, sign);
                 if (StringUtils.isNotBlank(secretKey)) {
-
                     // 使用redis缓存 jsonObject,并设置有效期
                     long current = System.currentTimeMillis();// 当前时间毫秒数
                     long zero = current / (1000 * 3600 * 24) * (1000 * 3600 * 24)
                             - TimeZone.getDefault().getRawOffset();// 今天零点零分零秒的毫秒数
                     long twelve = zero + 24 * 60 * 60 * 1000 - 1;// 今天23点59分59秒的毫秒数
                     long period = twelve - current;// 时间间隔
+
                     // 保存到 nationInterface 对象中
                     NationInterface nationInterface = new NationInterface();
                     nationInterface.setRtime(rtime);
@@ -73,11 +76,10 @@ public class SecretKeyService {
                     nationInterface.setRid(rid);
                     // 设置规则 key 为 rid@sid@appKey  sign
                     // 当天有效
-                    boolean isOk = redisUtils.set(rid + "@" + sid + "@" + appkey, nationInterface, period, TimeUnit.MILLISECONDS);
-                    boolean isOk1 = redisUtils.set(sign, nationInterface, period, TimeUnit.MILLISECONDS);
+                    boolean isOk = redisUtils.set("nation:" + rid + "@" + sid + "@" + appkey, nationInterface, period, TimeUnit.MILLISECONDS);
                     log.info("国家鉴权保存到redis=================>" + isOk);
                     //存redis成功
-                    if (isOk && isOk1) {
+                    if (isOk) {
                         jsonObject.put("sign", secretKey);
                         return jsonObject;
                     } else {
@@ -109,23 +111,15 @@ public class SecretKeyService {
     public JSONObject getRealSignAndRtime(
             final @ApiParam(value = "rid", required = true) @RequestParam(value = "") String rid,
             final @ApiParam(value = "sid", required = true) @RequestParam(value = "") String sid,
-            final @ApiParam(value = "appKey", required = true) @RequestParam(value = "") String appKey) {
+            final @ApiParam(value = "appKey", required = true) @RequestParam(value = "") String appKey,
+            @ApiParam(value = "appKey", required = true) @RequestParam(value = "") String firstSign) {
 
         JSONObject jsonObject = new JSONObject();
         String rtime = String.valueOf(System.currentTimeMillis());
-        boolean exists = redisUtils.exists(rid + "@" + sid + "@" + appKey);
-
-        if (exists) {
-            NationInterface info = (NationInterface) redisUtils.get(rid + "@" + sid + "@" + appKey);
             //获取真正的sign
-            log.info("redisInfo===============================>>>>>" + info.toString());
-            String realSecretKey = GetSecretKey.getRealSecretKey(rtime, rid, sid, appKey, info.getRealSecretKey());
-            log.info("realSecretKey===============================>>>>>>>" + realSecretKey);
+            String realSecretKey = GetSecretKey.getRealSecretKey(rtime, rid, sid, appKey, firstSign);
             jsonObject.put("sign", realSecretKey);
             jsonObject.put("rtime", rtime);
-        } else {
-            jsonObject.put("message", "sign不存在，请先获取sign值");
-        }
         return jsonObject;
     }
 

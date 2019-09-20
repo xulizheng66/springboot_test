@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.xulz</groupId>
     <artifactId>nation-authority</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.0</version>
     <name>nation-authority</name>
     <description>Demo project for Spring Boot</description>
 

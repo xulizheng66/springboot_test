@@ -1,6 +1,5 @@
 package com.xulz.fwjh.config;
 
-import com.xulz.fwjh.exception.CustomResponseErrorHandler;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -31,7 +30,6 @@ public class RestTemplateConfig {
                 break;
             }
         }
-
         // 解决中文乱码和返回xml
         /*restTemplate.getMessageConverters().clear();
         restTemplate.getMessageConverters().add(new FastJsonHttpMessageConverter());*/
@@ -43,8 +41,8 @@ public class RestTemplateConfig {
     @Bean
     public ClientHttpRequestFactory createFactory() {
         SimpleClientHttpRequestFactory factory = new SimpleClientHttpRequestFactory();
-        factory.setReadTimeout(5000);//单位为ms
-        factory.setConnectTimeout(5000);//单位为ms
+        factory.setReadTimeout(10000);//单位为ms
+        factory.setConnectTimeout(10000);//单位为ms
         return factory;
     }
 

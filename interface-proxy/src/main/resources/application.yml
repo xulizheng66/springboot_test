@@ -69,5 +69,25 @@ com:
     rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-480
     sid: s_X01201000200000000_4353
     appKey: aac71ba26ae180e3672e11183a31fe3b
+  # 社会组织信息查询服务接口(陇南市)
+  shzz_lns:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
+    sid: s_111000000000131433_3737
+    appKey: 5ed5bfa8081a94cfeda63d033868aa05
+  # 基金会法人登记证书查询(陇南市)
+  jjhfr_lns:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
+    sid: s_12100000000018032A_3940
+    appKey: 31e02676a1e9bd44e8eba2f3d61878db
+  # 低保对象信息查询服务(陇南市)
+  db_lns:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
+    sid: s_X01201000200000000_4353
+    appKey: 38c57221b3b00ccdd442ce395c057f08
+  # 殡葬服务火化信息查询(陇南市)
+  bzfw_lns:
+    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
+    sid: s_12100000000018032A_3939
+    appKey: c15766c9b0c1edb12d159074d55d65dd
 
 

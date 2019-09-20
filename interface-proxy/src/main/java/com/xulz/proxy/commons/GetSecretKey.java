@@ -136,7 +136,6 @@ public class GetSecretKey {
         System.out.println("secretKey====>" + secretKey);
         String appsecret = SymmetricEncoder.AESDncode(appkey, secretKey);
 
-//    	String appsecret = se.AESDncode("d73eb5464bdf8c67de59ecf160a1f7ca","GneUTO9lYEHCWVicmcdUMsw/9mC2mluOZxB3feCV8mFew5yDrHBHPykcy2mUfbF/");
         String realSecretKey = "";
         try {
 

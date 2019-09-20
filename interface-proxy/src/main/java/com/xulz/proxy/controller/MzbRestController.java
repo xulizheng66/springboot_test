@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import com.inspur.openservice.api.model.PostParameter;
+import com.xulz.proxy.InterfaceType;
 import com.xulz.proxy.service.SecretKeyService;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -141,116 +142,99 @@ public class MzbRestController {
         JSONObject resultJson = new JSONObject();
 
         if (null != secretKeyByNation && StringUtils.isNotBlank(error)) {
-            resultJson.put("message", "国家鉴权获取失败");
+            resultJson.put("message", "国家鉴权获取失败," + error);
             return resultJson;
         } else if (StringUtils.isNotBlank(firstSign)) {
             //真正的密钥有效期30分钟
-            //定时器每30分钟 获取 真正的密钥并保存到redis  firstSign@rid@sid@appkey
             log.info("第一次取到的密钥==============>" + firstSign);
-            JSONObject realSignAndRtime = null;
-            if (redisUtils.exists(firstSign + "@" + rid + "@" + sid + "@" + appKey)) {
-                realSignAndRtime = (JSONObject) redisUtils.get(firstSign + "@" + rid + "@" + sid + "@" + appKey);
-                log.info("从redis中获取到的第二次密钥 ================>>>" + realSignAndRtime.toJSONString());
-            } else {
-                log.info("获取第二次密钥开始 ================>>>");
-                realSignAndRtime = secretKeyService.getRealSignAndRtime(rid, sid, appKey);
-                log.info("获取到的第二次密钥 ================>>>" + realSignAndRtime.toJSONString());
-                redisUtils.set(firstSign + "@" + rid + "@" + sid + "@" + appKey, realSignAndRtime, 30L, TimeUnit.MINUTES);
+            log.info("获取第二次密钥开始 ...");
+            JSONObject realSignAndRtime = secretKeyService.getRealSignAndRtime(rid, sid, appKey, firstSign);
+            log.info("获取到的第二次密钥和时间 ================>>>" + realSignAndRtime.toJSONString());
+            //业务处理开始
+            log.info("业务处理开始------------->>>>>");
+            String sign = realSignAndRtime.getString("sign");
+            String rtime = realSignAndRtime.getString("rtime");
+            //调用接口类型 单人：dr  双人：sr  法人：fr
+            String name_man = params.getName_man();
+            String cert_num_man = params.getCert_num_man();
+            String name_woman = params.getName_woman();
+            String cert_num_woman = params.getCert_num_woman();
+            String org_name = params.getOrg_name();
+            String usc_code = params.getUsc_code();
+            String id_card = params.getId_card();
+            String name = params.getName();
+            String child_name = params.getChild_name();
+            String child_idcard = params.getChild_idcard();
+            // sdk
+            OpenServiceClient client = new OpenServiceClient();
+            RequestParams openServiceParam = new RequestParams();
+            // 默认参数
+            openServiceParam.setContext("");
+            openServiceParam.setVersion("");
+            openServiceParam.setMethod("get");
+            openServiceParam.addParam("clientName", "中心");
+
+            // 中心认证参数
+            openServiceParam.addParam("gjgxjhpt_rid", rid);
+            openServiceParam.addParam("gjgxjhpt_sid", sid);
+            openServiceParam.addParam("gjgxjhpt_sign", sign);
+            openServiceParam.addParam("gjgxjhpt_rtime", rtime);
+
+            // 业务逻辑处理
+            if (Constants.MZB_DR.equalsIgnoreCase(type)) {
+                // 单人
+                openServiceParam.addParam("name_man", name_man); // 姓名
+                openServiceParam.addParam("cert_num_man", cert_num_man);// 身份证号
+            } else if (Constants.MZB_SR.equalsIgnoreCase(type)) {
+                // 双人
+                openServiceParam.addParam("name_man", name_man);// 男方姓名
+                openServiceParam.addParam("cert_num_man", cert_num_man);// 男方身份证号
+                openServiceParam.addParam("name_woman", name_woman);// 女方姓名
+                openServiceParam.addParam("cert_num_woman", cert_num_woman);// 女方身份证号
+            } else if (Constants.MZB_FR.equalsIgnoreCase(type) || Constants.MZB_JJH_FR.equals(type) || Constants.MZB_SHZZ.equals(type)) {
+                // 社会团体法人登记证书查询  基金会法人登记证书接口  社会组织信息接口说明
+                openServiceParam.addParam("org_name", org_name);// 社会组织名称
+                openServiceParam.addParam("usc_code", usc_code); // 统一信用代码
+            } else if (Constants.MZB_DB.equalsIgnoreCase(type) || Constants.MZB_BZFW.equals(type)) {
+                // 低保对象信息 或者 殡葬服务火化信息
+                openServiceParam.addParam("id_card", id_card);// 身份证号
+                openServiceParam.addParam("name", name); //姓名
+            } else if (Constants.MZB_LSET.equalsIgnoreCase(type)) {
+                //留守儿童和困境儿童信息
+                openServiceParam.addParam("child_name", child_name);// 儿童姓名
+                openServiceParam.addParam("child_idcard", child_idcard); //身份证号
+            } else if (Constants.MZB_JJH_FR.equalsIgnoreCase(type)) {
+                //留守儿童和困境儿童信息
+                openServiceParam.addParam("child_name", child_name);// 儿童姓名
+                openServiceParam.addParam("child_idcard", child_idcard); //身份证号
+            } else if (Constants.MZB_SHZZ.equalsIgnoreCase(type)) {
+                //留守儿童和困境儿童信息
+                openServiceParam.addParam("child_name", child_name);// 儿童姓名
+                openServiceParam.addParam("child_idcard", child_idcard); //身份证号
             }
 
-            String error1 = realSignAndRtime.getString("message");
-
-            if (StringUtils.isNotBlank(error1)) {
-                resultJson.put("errorMsg", "请先获取国家鉴权");
+            // 分页参数
+            openServiceParam.addParam("start", "0");// 起始页
+            openServiceParam.addParam("limit", "1");// 页面大小
+            try {
+                jsonStr = this.sendRequest(openServiceParam, client);
+            } catch (ClientException e) {
+                e.printStackTrace();
+                log.error("message===================>" + e.getMessage(), e);
+                log.error("error===================>" + e.getError(), e);
+                log.error("ErrorDescription===================>" + e.getErrorDescription(), e);
+                resultJson.put("message", "系统异常【" + e.getMessage() + "】");
                 return resultJson;
-            } else {
-                //业务处理开始
-                log.info("业务处理开始------------->>>>>");
-                String sign = realSignAndRtime.getString("sign");
-                String rtime = realSignAndRtime.getString("rtime");
-                log.info("第二次密钥：sign===============>" + sign);
-                log.info("rtime===============>" + rtime);
-                //调用接口类型 单人：dr  双人：sr  法人：fr
-
-                String name_man = params.getName_man();
-                String cert_num_man = params.getCert_num_man();
-                String name_woman = params.getName_woman();
-                String cert_num_woman = params.getCert_num_woman();
-                String org_name = params.getOrg_name();
-                String usc_code = params.getUsc_code();
-                String id_card = params.getId_card();
-                String name = params.getName();
-                String child_name = params.getChild_name();
-                String child_idcard = params.getChild_idcard();
-
-                // sdk
-                OpenServiceClient client = new OpenServiceClient();
-                RequestParams openServiceParam = new RequestParams();
-                // 默认参数
-                openServiceParam.setContext("");
-                openServiceParam.setVersion("");
-                openServiceParam.setMethod("get");
-                openServiceParam.addParam("clientName", "中心");
-
-                // 中心认证参数
-                openServiceParam.addParam("gjgxjhpt_rid", rid);
-                openServiceParam.addParam("gjgxjhpt_sid", sid);
-                openServiceParam.addParam("gjgxjhpt_sign", sign);
-                openServiceParam.addParam("gjgxjhpt_rtime", rtime);
-
-                // 业务逻辑处理
-                if (Constants.MZB_DR.equalsIgnoreCase(type)) {
-                    // 单人
-                    openServiceParam.addParam("name_man", name_man); // 姓名
-                    openServiceParam.addParam("cert_num_man", cert_num_man);// 身份证号
-                } else if (Constants.MZB_SR.equalsIgnoreCase(type)) {
-                    // 双人
-                    openServiceParam.addParam("name_man", name_man);// 男方姓名
-                    openServiceParam.addParam("cert_num_man", cert_num_man);// 男方身份证号
-                    openServiceParam.addParam("name_woman", name_woman);// 女方姓名
-                    openServiceParam.addParam("cert_num_woman", cert_num_woman);// 女方身份证号
-                } else if (Constants.MZB_FR.equalsIgnoreCase(type)) {
-                    // 社会团体法人登记证书查询
-                    openServiceParam.addParam("org_name", org_name);// 社会组织名称
-                    openServiceParam.addParam("usc_code", usc_code); // 统一信用代码
-                } else if (Constants.MZB_DB.equalsIgnoreCase(type)) {
-                    //低保对象信息
-                    openServiceParam.addParam("id_card", id_card);// 身份证号
-                    openServiceParam.addParam("name", name); //姓名
-                } else if (Constants.MZB_BZFW.equalsIgnoreCase(type)) {
-                    //殡葬服务火化信息
-                    openServiceParam.addParam("id_card", id_card);// 身份证号
-                    openServiceParam.addParam("name", name); //逝者姓名
-                } else if (Constants.MZB_LSET.equalsIgnoreCase(type)) {
-                    //留守儿童和困境儿童信息
-                    openServiceParam.addParam("child_name", child_name);// 儿童姓名
-                    openServiceParam.addParam("child_idcard", child_idcard); //身份证号
-                }
-
-                // 分页参数
-                openServiceParam.addParam("start", "0");// 起始页
-                openServiceParam.addParam("limit", "1");// 页面大小
-
-                try {
-                    jsonStr = this.sendRequest(openServiceParam, client);
-                } catch (ClientException e) {
-                    e.printStackTrace();
-                    log.error("message===================>" + e.getMessage(), e);
-                    log.error("error===================>" + e.getError(), e);
-                    log.error("ErrorDescription===================>" + e.getErrorDescription(), e);
-                    resultJson.put("message", "系统异常【" + e.getMessage() + "】");
-                    return resultJson;
-                }
-                System.out.println("result" + jsonStr);
-                return JSONObject.parseObject(jsonStr);
             }
+            System.out.println("result" + jsonStr);
+            return JSONObject.parseObject(jsonStr);
 
         }
         return resultJson;
     }
 
     /**
-     * 民政部发送请求的方法
+     * 重写 民政部发送请求的方法 抛出异常
      */
     public String sendRequest(RequestParams requestParam, OpenServiceClient client) throws ClientException {
         String context = requestParam.getContext();
@@ -398,149 +382,21 @@ public class MzbRestController {
         return restInfo;
     }
 
-
-    /**
-     * 系统参数校验
-     * @param params
-     * @return
-     */
-    private JSONObject checkParmas(MzbParams params) {
+    @RequestMapping(value = "/getDbdxxx", method = RequestMethod.POST)
+    @ApiOperation(value = "民政部-REST接口调用(低保对象信息查询)")
+    public JSONObject getDbdxxx(@RequestBody MzbParams mzbParams) {
         JSONObject result = new JSONObject();
-        if (StringUtils.isBlank(params.getSid())) {
-            result.put("errorMsg", "sid不能为空");
+        if (!StringUtils.isNoneBlank(mzbParams.getId_card(), mzbParams.getName())) {
+            result.put("message", "参数错误，请核实");
             return result;
         }
-        if (StringUtils.isBlank(params.getRid())) {
-            result.put("errorMsg", "rid不能为空");
-            return result;
+        if (InterfaceType.MZB_DB.getSid().equals(mzbParams.getSid())) {
+            JSONObject restInfo = getRestInfoByMzbWithPublic(mzbParams.getRid(), mzbParams.getSid(), mzbParams.getAppkey(),
+                    mzbParams, InterfaceType.MZB_DB.getType());
+            return restInfo;
         }
-        if (StringUtils.isBlank(params.getAppkey())) {
-            result.put("errorMsg", "appkey不能为空");
-            return result;
-        }
+        result.put("message", "sid输入有误");
         return result;
     }
-
-    @ApiOperation(value = "获取国家鉴权")
-    private JSONObject getAuthByGj(MzbParams params) {
-        String rid = params.getRid();
-        String sid = params.getSid();
-        String appKey = params.getAppkey();
-        // 获取国家鉴权 (当日有效)
-        JSONObject secretKeyByNation = secretKeyService.getSecretKeyByNation(authUrl, params.getRid(), params.getSid(), params.getAppkey());
-        // 返回json对象后，message 为错误信息   sign 为正确信息
-        String error = secretKeyByNation.getString("message");
-        String firstSign = secretKeyByNation.getString("sign");
-        //返回结果
-        JSONObject resultJson = new JSONObject();
-
-        if (null != secretKeyByNation && StringUtils.isNotBlank(error)) {
-            resultJson.put("errorMsg", "国家鉴权获取失败");
-            return resultJson;
-        } else if (StringUtils.isNotBlank(firstSign)) {
-            //真正的密钥有效期30分钟
-            //定时器每30分钟 获取 真正的密钥并保存到redis  firstSign@rid@sid@appkey
-            if (redisUtils.exists(firstSign + "@" + rid + "@" + sid + "@" + appKey)) {
-                resultJson = (JSONObject) redisUtils.get(firstSign + "@" + rid + "@" + sid + "@" + appKey);
-            } else {
-                resultJson = secretKeyService.getRealSignAndRtime(rid, sid, appKey);
-                redisUtils.set(firstSign + "@" + rid + "@" + sid + "@" + appKey, resultJson, 30L, TimeUnit.MINUTES);
-            }
-
-            String errorMsg = resultJson.getString("message");
-            if (StringUtils.isNotBlank(errorMsg)) {
-                resultJson.put("errorMsg", "请先获取国家鉴权");
-                return resultJson;
-            }
-        }
-        return resultJson;
-    }
-
-
-    @RequestMapping(value = "/getInfoByMzb", method = RequestMethod.POST)
-    @ApiOperation(value = "民政部接口调用(通用接口)")
-    public JSONObject getInfoByMzb(@RequestBody MzbParams mzbParams) {
-        // 系统参数校验
-        JSONObject result = this.checkParmas(mzbParams);
-        if (StringUtils.isNotBlank(result.getString("errorMsg"))) {
-            return result;
-        }
-        // 获取国家接口鉴权并保存到redis
-        JSONObject authByGj = this.getAuthByGj(mzbParams);
-        if (StringUtils.isNotBlank(authByGj.getString("errorMsg"))) {
-            return authByGj;
-        }
-
-        //业务处理开始
-        String sign = authByGj.getString("sign");
-        String rtime = authByGj.getString("rtime");
-        //{"name_man":"xxx","cert_num_man":"xxx","name_woman":"xxx","cert_num_woman":"xxx","org_name":"xxx","usc_code":"xxx"}
-
-        String rid = mzbParams.getRid();
-        String sid = mzbParams.getSid();
-
-        // 入参
-        String name_man = mzbParams.getName_man();
-        String cert_num_man = mzbParams.getCert_num_man();
-        String name_woman = mzbParams.getName_woman();
-        String cert_num_woman = mzbParams.getCert_num_woman();
-        String org_name = mzbParams.getOrg_name();
-        String usc_code = mzbParams.getUsc_code();
-        String id_card = mzbParams.getId_card();
-        String name = mzbParams.getName();
-        String child_name = mzbParams.getChild_name();
-        String child_idcard = mzbParams.getChild_idcard();
-
-        // sdk
-        OpenServiceClient client = new OpenServiceClient();
-        RequestParams openServiceParam = new RequestParams();
-        // 默认参数
-        openServiceParam.setContext("");
-        openServiceParam.setVersion("");
-        openServiceParam.setMethod("get");
-        openServiceParam.addParam("clientName", "中心");
-
-        // 中心认证参数
-        openServiceParam.addParam("gjgxjhpt_rid", rid);
-        openServiceParam.addParam("gjgxjhpt_sid", sid);
-        openServiceParam.addParam("gjgxjhpt_sign", sign);
-        openServiceParam.addParam("gjgxjhpt_rtime", rtime);
-
-        // 业务逻辑处理
-
-        // 单人
-        openServiceParam.addParam("name_man", name_man); // 姓名
-        openServiceParam.addParam("cert_num_man", cert_num_man);// 身份证号
-        // 双人
-        openServiceParam.addParam("name_man", name_man);// 男方姓名
-        openServiceParam.addParam("cert_num_man", cert_num_man);// 男方身份证号
-        openServiceParam.addParam("name_woman", name_woman);// 女方姓名
-        openServiceParam.addParam("cert_num_woman", cert_num_woman);// 女方身份证号
-        // 社会团体法人登记证书查询
-        openServiceParam.addParam("org_name", org_name);// 社会组织名称
-        openServiceParam.addParam("usc_code", usc_code); // 统一信用代码
-        //低保对象信息 或 殡葬服务火化信息
-        openServiceParam.addParam("id_card", id_card);// 身份证号
-        openServiceParam.addParam("name", name); //姓名
-        //全国留守儿童和困境儿童信息
-        openServiceParam.addParam("child_name", child_name);// 儿童姓名
-        openServiceParam.addParam("child_idcard", child_idcard); //身份证号码
-
-        // 分页参数
-        openServiceParam.addParam("start", "0");// 起始页
-        openServiceParam.addParam("limit", "1");// 页面大小
-        // 返回结果
-        JSONObject resultJson = new JSONObject();
-        try {
-            String resultStr = client.sendRequest(openServiceParam);
-            resultJson = JSONObject.parseObject(resultStr);
-            return resultJson;
-        } catch (ClientException e) {
-            e.printStackTrace();
-            resultJson.put("message", "参数异常");
-            return resultJson;
-        }
-    }
-
 
 }

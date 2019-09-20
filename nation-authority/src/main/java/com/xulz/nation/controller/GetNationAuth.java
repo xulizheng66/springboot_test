@@ -3,6 +3,7 @@ package com.xulz.nation.controller;
 import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.xulz.nation.base.BaseController;
 import com.xulz.nation.base.ResultMsg;
 import com.xulz.nation.commons.GetSecretKey;
@@ -14,10 +15,7 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +34,7 @@ public class GetNationAuth extends BaseController {
     @Autowired
     RedisUtils redisUtils;
 
-    @GetMapping("getAuth")
+    @PostMapping("getAuth")
     @ApiOperation(value = "获取密钥")
     public ResultMsg getNationAuth(
             @ApiParam(value = "url（获取签名地址）", required = true, defaultValue = "http://59.255.105.32:8181/sysapi/auth/refreshappsecret")
@@ -49,12 +47,18 @@ public class GetNationAuth extends BaseController {
         // 国家接口获取到的secretKey当天有效
         String sign = GetSecretKey.getSign(sid, rid, rtime, appkey);
         if (StringUtils.isNotBlank(sign)) {
-            String secretKey = GetSecretKey.getSecretKey(url, rid, sid, rtime, sign);
-            if (StringUtils.isNotBlank(secretKey) && !secretKey.equals("-1")) {
-                NationInterface nationInterface = storeToRedis(rid, sid, rtime, appkey, secretKey);
+            String firstSign = GetSecretKey.getSecretKey(url, rid, sid, rtime, sign);
+            if (StringUtils.isNotBlank(firstSign) && !firstSign.equals("-1")) {
+                NationInterface nationInterface = getTokenFromRedis(rid, sid, rtime, appkey, firstSign);
                 log.info("国家鉴权获取成功...\n" + nationInterface.toString());
-                return returnSuccess(nationInterface);
-            } else if (StringUtils.isBlank(secretKey)) {
+                log.info("获取真正的密钥开始...\n");
+                JSONObject result = new JSONObject();
+                String realSecretKey = GetSecretKey.getRealSecretKey(rtime, rid, sid, appkey, firstSign);
+                result.put("rtime", rtime);
+                result.put("sign", realSecretKey);
+                log.info("获取到的签名和时间" + result.toJSONString());
+                return returnSuccess(result);
+            } else if (StringUtils.isBlank(firstSign)) {
                 log.error("鉴权获取异常，请检查url");
                 return returnError("鉴权获取异常，请检查url");
             }
@@ -68,7 +72,7 @@ public class GetNationAuth extends BaseController {
     /**
      * 将当天的密钥保存到redis
      */
-    private NationInterface storeToRedis(String rid, String sid, String rtime, String appkey, String secretKey) {
+    private NationInterface getTokenFromRedis(String rid, String sid, String rtime, String appkey, String secretKey) {
         NationInterface ni = (NationInterface) redisUtils.get("nation:" + rid + "@" + sid + "@" + appkey);
         if (null != ni) {
             return ni;
@@ -89,6 +93,15 @@ public class GetNationAuth extends BaseController {
         redisUtils.set("nation:" + rid + "@" + sid + "@" + appkey, nationInterface, period, TimeUnit.MILLISECONDS);
         return nationInterface;
     }
+
+    /**
+     * 将当天的密钥保存到redis
+     */
+    private NationInterface getRealSign(String rid, String sid, String rtime, String appkey, String secretKey) {
+
+        return null;
+    }
+
 
 
 /*    @GetMapping("test")
