@@ -55,7 +55,8 @@ public class GetSecretKeyByGjController {
                 if (StringUtils.isNotBlank(secretKey) && !"-1".equals(secretKey)) {
 
                     // 使用redis缓存 jsonObject,并设置有效期
-                    long current = System.currentTimeMillis();// 当前时间毫秒数
+                    // 当前时间毫秒数
+                    long current = System.currentTimeMillis();
                     long zero = current / (1000 * 3600 * 24) * (1000 * 3600 * 24)
                             - TimeZone.getDefault().getRawOffset();// 今天零点零分零秒的毫秒数
                     long twelve = zero + 24 * 60 * 60 * 1000 - 1;// 今天23点59分59秒的毫秒数

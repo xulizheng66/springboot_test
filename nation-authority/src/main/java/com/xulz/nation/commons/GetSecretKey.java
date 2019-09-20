@@ -7,6 +7,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.crypto.Mac;
@@ -83,27 +84,29 @@ public class GetSecretKey {
 
         //设置请求头
         HttpHeaders headers = new HttpHeaders();
-        MediaType mediaType = MediaType.parseMediaType("application/json;charset=UTF-8");
-        headers.setContentType(mediaType);
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
         headers.add("Accept", MediaType.APPLICATION_JSON.toString());
 
-        HttpEntity<Map<String, String>> formEntity = new HttpEntity<>(map, headers);
-        HttpEntity<String> response = restTemplate.exchange(url,
-                HttpMethod.POST, formEntity, String.class);
-
+        HttpEntity<Map<String, String>> httpEntity = new HttpEntity<>(map, headers);
+        HttpEntity<String> response = null;
+        try {
+            response = restTemplate.exchange(url, HttpMethod.POST, httpEntity, String.class);
+        } catch (RestClientException e) {
+            log.error("接口调用异常[{}]", e.getMessage());
+            return null;
+        }
         String secretKey = response.getBody();
         JSONObject jsonObject = JSONObject.parseObject(secretKey);
-        String code = jsonObject.getString("code");// "0"表示成功
+        // "0"表示成功
+        String code = jsonObject.getString("code");
         String data = jsonObject.getString("data");
-
         if ("0".equals(code)) {
             JSONObject jsonObj = JSONObject.parseObject(data);
             String secret = jsonObj.getString("secret");
             //密钥有效期
             String secretEndTime = jsonObj.getString("secretEndTime");
-            System.out.println("第一次secret:+++++++++++++++++" + secret);
-            System.out.println("生成密钥时间:rtime--------------------------------" + rtime);
-
+            log.info("第一次secret：---->" + secret);
+            log.info("生成密钥时间rtime：---->" + rtime);
             return secret;
         } else if ("-1".equals(code) || "E-106".equals(code)) {
             //{"code":"-1","data":"","message":"接口调用失败"}
@@ -113,6 +116,7 @@ public class GetSecretKey {
             //系统异常
             return null;
         }
+
     }
 
     /**

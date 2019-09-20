@@ -1,4 +1,4 @@
-package com.xulz.proxy.entity;
+package com.xulz.nation.entity;
 
 import lombok.Data;
 
@@ -17,5 +17,5 @@ public class NationInterface implements Serializable {
     private String appkey;
     private String rtime;
     private String realSecretKey;
-
+    
 }
