@@ -1,13 +1,17 @@
 package com.xulz.proxy.controller;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
+import com.alibaba.fastjson.JSONObject;
+import com.inspur.openservice.api.OpenServiceClient;
+import com.inspur.openservice.api.RequestParams;
+import com.inspur.openservice.api.model.ClientException;
 import com.inspur.openservice.api.model.PostParameter;
 import com.xulz.proxy.InterfaceType;
+import com.xulz.proxy.commons.Constants;
+import com.xulz.proxy.commons.RedisUtils;
+import com.xulz.proxy.entity.MzbParams;
 import com.xulz.proxy.service.SecretKeyService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.codehaus.jackson.JsonParseException;
@@ -21,16 +25,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import com.alibaba.fastjson.JSONObject;
-import com.inspur.openservice.api.OpenServiceClient;
-import com.inspur.openservice.api.RequestParams;
-import com.inspur.openservice.api.model.ClientException;
-import com.xulz.proxy.commons.Constants;
-import com.xulz.proxy.commons.RedisUtils;
-import com.xulz.proxy.entity.MzbParams;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @description: 民政部接口调用
@@ -221,14 +218,13 @@ public class MzbRestController {
             try {
                 jsonStr = this.sendRequest(openServiceParam, client);
             } catch (ClientException e) {
-                e.printStackTrace();
-                log.error("message===================>" + e.getMessage(), e);
-                log.error("error===================>" + e.getError(), e);
-                log.error("ErrorDescription===================>" + e.getErrorDescription(), e);
+                log.error("message===================>[{}],[{}]" + e.getMessage());
+                log.error("error===================>" + e.getError());
+                log.error("ErrorDescription===================>[{}]" + e.getErrorDescription());
                 resultJson.put("message", "系统异常【" + e.getMessage() + "】");
                 return resultJson;
             }
-            System.out.println("result" + jsonStr);
+            log.info("返回结果：" + jsonStr);
             return JSONObject.parseObject(jsonStr);
 
         }
