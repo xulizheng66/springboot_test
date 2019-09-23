@@ -124,7 +124,7 @@ public class MzbRestController {
      * @param rid    请求者标识
      * @param sid    接口编码
      * @param appKey 发送方签名(appKey)
-     * @param params 接口请求参数Json字符串
+     * @param params 接口请求参数Json字符串(业务参数)
      * @param type   接口类型
      * @return
      */
@@ -173,7 +173,6 @@ public class MzbRestController {
             openServiceParam.setVersion("");
             openServiceParam.setMethod("get");
             openServiceParam.addParam("clientName", "中心");
-
             // 中心认证参数
             openServiceParam.addParam("gjgxjhpt_rid", rid);
             openServiceParam.addParam("gjgxjhpt_sid", sid);
@@ -211,6 +210,9 @@ public class MzbRestController {
                 //留守儿童和困境儿童信息
                 openServiceParam.addParam("child_name", child_name);// 儿童姓名
                 openServiceParam.addParam("child_idcard", child_idcard); //身份证号
+            } else {
+                resultJson.put("message", "请求接口不存在");
+                return resultJson;
             }
 
             // 分页参数
@@ -382,6 +384,60 @@ public class MzbRestController {
         return restInfo;
     }
 
+    /**
+     * 按接口类型（sid）调用
+     **/
+    @RequestMapping(value = "/getHydjxxdr", method = RequestMethod.POST)
+    @ApiOperation(value = "民政部-REST接口调用(婚姻登记信息核验（单人）接口)")
+    public JSONObject getHydjxxdr(@RequestBody MzbParams mzbParams) {
+        JSONObject result = new JSONObject();
+        if (!StringUtils.isNoneBlank(mzbParams.getName_man(), mzbParams.getCert_num_man())) {
+            result.put("message", "参数错误，请核实");
+            return result;
+        }
+        if (InterfaceType.MZB_DR.getSid().equals(mzbParams.getSid())) {
+            JSONObject restInfo = getRestInfoByMzbWithPublic(mzbParams.getRid(), mzbParams.getSid(), mzbParams.getAppkey(),
+                    mzbParams, InterfaceType.MZB_DR.getType());
+            return restInfo;
+        }
+        result.put("message", "sid输入有误");
+        return result;
+    }
+
+    @RequestMapping(value = "/getHydjsr", method = RequestMethod.POST)
+    @ApiOperation(value = "民政部-REST接口调用(婚姻登记信息核验（双人）接口)")
+    public JSONObject getHydjsr(@RequestBody MzbParams mzbParams) {
+        JSONObject result = new JSONObject();
+        if (!StringUtils.isNoneBlank(mzbParams.getName_man(), mzbParams.getCert_num_man(), mzbParams.getName_woman(), mzbParams.getCert_num_woman())) {
+            result.put("message", "参数错误，请核实");
+            return result;
+        }
+        if (InterfaceType.MZB_SR.getSid().equals(mzbParams.getSid())) {
+            JSONObject restInfo = getRestInfoByMzbWithPublic(mzbParams.getRid(), mzbParams.getSid(), mzbParams.getAppkey(),
+                    mzbParams, InterfaceType.MZB_SR.getType());
+            return restInfo;
+        }
+        result.put("message", "sid输入有误");
+        return result;
+    }
+
+    @RequestMapping(value = "/getShttfr", method = RequestMethod.POST)
+    @ApiOperation(value = "民政部-REST接口调用(社会团体法人登记证书接口说明)")
+    public JSONObject getShttfr(@RequestBody MzbParams mzbParams) {
+        JSONObject result = new JSONObject();
+        if (!StringUtils.isNoneBlank(mzbParams.getOrg_name(), mzbParams.getUsc_code())) {
+            result.put("message", "参数错误，请核实");
+            return result;
+        }
+        if (InterfaceType.MZB_FR.getSid().equals(mzbParams.getSid())) {
+            JSONObject restInfo = getRestInfoByMzbWithPublic(mzbParams.getRid(), mzbParams.getSid(), mzbParams.getAppkey(),
+                    mzbParams, InterfaceType.MZB_FR.getType());
+            return restInfo;
+        }
+        result.put("message", "sid输入有误");
+        return result;
+    }
+
     @RequestMapping(value = "/getDbdxxx", method = RequestMethod.POST)
     @ApiOperation(value = "民政部-REST接口调用(低保对象信息查询)")
     public JSONObject getDbdxxx(@RequestBody MzbParams mzbParams) {
@@ -393,6 +449,74 @@ public class MzbRestController {
         if (InterfaceType.MZB_DB.getSid().equals(mzbParams.getSid())) {
             JSONObject restInfo = getRestInfoByMzbWithPublic(mzbParams.getRid(), mzbParams.getSid(), mzbParams.getAppkey(),
                     mzbParams, InterfaceType.MZB_DB.getType());
+            return restInfo;
+        }
+        result.put("message", "sid输入有误");
+        return result;
+    }
+
+    @RequestMapping(value = "/getBzhhzm", method = RequestMethod.POST)
+    @ApiOperation(value = "民政部-REST接口调用(殡葬管理火化证明查询接口)")
+    public JSONObject getBzhhzm(@RequestBody MzbParams mzbParams) {
+        JSONObject result = new JSONObject();
+        if (!StringUtils.isNoneBlank(mzbParams.getId_card(), mzbParams.getName())) {
+            result.put("message", "参数错误，请核实");
+            return result;
+        }
+        if (InterfaceType.MZB_BZFW.getSid().equals(mzbParams.getSid())) {
+            JSONObject restInfo = getRestInfoByMzbWithPublic(mzbParams.getRid(), mzbParams.getSid(), mzbParams.getAppkey(),
+                    mzbParams, InterfaceType.MZB_BZFW.getType());
+            return restInfo;
+        }
+        result.put("message", "sid输入有误");
+        return result;
+    }
+
+    @RequestMapping(value = "/getLsetxx", method = RequestMethod.POST)
+    @ApiOperation(value = "民政部-REST接口调用(全国留守儿童和困境儿童信息查询)")
+    public JSONObject getLsetxx(@RequestBody MzbParams mzbParams) {
+        JSONObject result = new JSONObject();
+        if (!StringUtils.isNoneBlank(mzbParams.getChild_idcard(), mzbParams.getChild_name())) {
+            result.put("message", "参数错误，请核实");
+            return result;
+        }
+        if (InterfaceType.MZB_LSET.getSid().equals(mzbParams.getSid())) {
+            JSONObject restInfo = getRestInfoByMzbWithPublic(mzbParams.getRid(), mzbParams.getSid(), mzbParams.getAppkey(),
+                    mzbParams, InterfaceType.MZB_LSET.getType());
+            return restInfo;
+        }
+        result.put("message", "sid输入有误");
+        return result;
+    }
+
+    @RequestMapping(value = "/getJjhfr", method = RequestMethod.POST)
+    @ApiOperation(value = "民政部-REST接口调用(基金会法人登记证书接口)")
+    public JSONObject getJjhfr(@RequestBody MzbParams mzbParams) {
+        JSONObject result = new JSONObject();
+        if (!StringUtils.isNoneBlank(mzbParams.getOrg_name(), mzbParams.getUsc_code())) {
+            result.put("message", "参数错误，请核实");
+            return result;
+        }
+        if (InterfaceType.MZB_JJH_FR.getSid().equals(mzbParams.getSid())) {
+            JSONObject restInfo = getRestInfoByMzbWithPublic(mzbParams.getRid(), mzbParams.getSid(), mzbParams.getAppkey(),
+                    mzbParams, InterfaceType.MZB_JJH_FR.getType());
+            return restInfo;
+        }
+        result.put("message", "sid输入有误");
+        return result;
+    }
+
+    @RequestMapping(value = "/getShzzxx", method = RequestMethod.POST)
+    @ApiOperation(value = "民政部-REST接口调用(社会组织信息接口说明)")
+    public JSONObject getShzzxx(@RequestBody MzbParams mzbParams) {
+        JSONObject result = new JSONObject();
+        if (!StringUtils.isNoneBlank(mzbParams.getOrg_name(), mzbParams.getUsc_code())) {
+            result.put("message", "参数错误，请核实");
+            return result;
+        }
+        if (InterfaceType.MZB_SHZZ.getSid().equals(mzbParams.getSid())) {
+            JSONObject restInfo = getRestInfoByMzbWithPublic(mzbParams.getRid(), mzbParams.getSid(), mzbParams.getAppkey(),
+                    mzbParams, InterfaceType.MZB_SHZZ.getType());
             return restInfo;
         }
         result.put("message", "sid输入有误");
