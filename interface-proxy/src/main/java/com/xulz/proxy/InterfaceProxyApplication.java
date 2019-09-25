@@ -6,12 +6,15 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+/**
+ * @author xulz
+ */
 @SpringBootApplication
 @EnableSwagger2             //启动swagger注解
 @EnableScheduling    //开启定时器
-public class WebserviceApplication {
+public class InterfaceProxyApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(WebserviceApplication.class, args);
+        SpringApplication.run(InterfaceProxyApplication.class, args);
     }
 }

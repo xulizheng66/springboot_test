@@ -25,69 +25,69 @@ com:
     authUrl: http://59.255.105.32:8181/sysapi/auth/refreshappsecret
     callUrl: http://59.255.105.32:8181/httpproxy
     # 社会团体法人（兰州新区）
-  fr_lzxq:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-257
-    sid: s_12100000000018032A_3942
-    appKey: f2a2d99d53f6a18231ca4a2f251fc774
-    # 社会团体法人（武威）
-  fr_ww:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-177
-    sid: s_12100000000018032A_3942
-    appKey: c96d54af3fd61251a61cc2c70776fa7d
-    # 单人（甘肃省人民政府)
-  dr_srmzf:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-141
-    sid: s_X01201000200000000_4817
-    appKey: 4a7051d57869b805adf092f794f017ad
-    # 双人（甘肃省人民政府）
-  sr_srmzf:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-141
-    sid: s_X01201000200000000_4818
-    appKey: f41a8d56c0e57e048e1f17753c838049
-    # 双人（甘肃省公安厅）
-  sr_sgat:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-221
-    sid: s_X01201000200000000_4818
-    appKey: 0b3920397de1dfdd3c18aaaa313d1f30
-    # 低保对象（甘肃省人力资源和社会保障厅）
-  db_srst:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-313
-    sid: s_X01201000200000000_4353
-    appKey: 5641bcc9f726dea769e7f0434a82050f
-    # 殡葬服务火化信息(兰州市)
-  bzfw_lzs:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-226
-    sid: s_12100000000018032A_3939
-    appKey: 4052face4cdf93f1b0f1575cbd52c9af
-    # 全国留守儿童和困境儿童信息(扶贫办)
-  lset_fpb:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-480
-    sid: s_X01201000200000000_4352
-    appKey: 38ff8aa00953a529a2da0102031dc738
-    # 低保对象(扶贫办)
-  db_fpb:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-480
-    sid: s_X01201000200000000_4353
-    appKey: aac71ba26ae180e3672e11183a31fe3b
-  # 社会组织信息查询服务接口(陇南市)
-  shzz_lns:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
-    sid: s_111000000000131433_3737
-    appKey: 5ed5bfa8081a94cfeda63d033868aa05
-  # 基金会法人登记证书查询(陇南市)
-  jjhfr_lns:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
-    sid: s_12100000000018032A_3940
-    appKey: 31e02676a1e9bd44e8eba2f3d61878db
-  # 低保对象信息查询服务(陇南市)
-  db_lns:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
-    sid: s_X01201000200000000_4353
-    appKey: 38c57221b3b00ccdd442ce395c057f08
-  # 殡葬服务火化信息查询(陇南市)
-  bzfw_lns:
-    rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
-    sid: s_12100000000018032A_3939
-    appKey: c15766c9b0c1edb12d159074d55d65dd
+    fr_lzxq:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-257
+      sid: s_12100000000018032A_3942
+      appKey: f2a2d99d53f6a18231ca4a2f251fc774
+      # 社会团体法人（武威）
+    fr_ww:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-177
+      sid: s_12100000000018032A_3942
+      appKey: c96d54af3fd61251a61cc2c70776fa7d
+      # 单人（甘肃省人民政府)
+    dr_srmzf:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-141
+      sid: s_X01201000200000000_4817
+      appKey: 4a7051d57869b805adf092f794f017ad
+      # 双人（甘肃省人民政府）
+    sr_srmzf:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-141
+      sid: s_X01201000200000000_4818
+      appKey: f41a8d56c0e57e048e1f17753c838049
+      # 双人（甘肃省公安厅）
+    sr_sgat:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-221
+      sid: s_X01201000200000000_4818
+      appKey: 0b3920397de1dfdd3c18aaaa313d1f30
+      # 低保对象（甘肃省人力资源和社会保障厅）
+    db_srst:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-313
+      sid: s_X01201000200000000_4353
+      appKey: 5641bcc9f726dea769e7f0434a82050f
+      # 殡葬服务火化信息(兰州市)
+    bzfw_lzs:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-226
+      sid: s_12100000000018032A_3939
+      appKey: 4052face4cdf93f1b0f1575cbd52c9af
+      # 全国留守儿童和困境儿童信息(扶贫办)
+    lset_fpb:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-480
+      sid: s_X01201000200000000_4352
+      appKey: 38ff8aa00953a529a2da0102031dc738
+      # 低保对象(扶贫办)
+    db_fpb:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-480
+      sid: s_X01201000200000000_4353
+      appKey: aac71ba26ae180e3672e11183a31fe3b
+    # 社会组织信息查询服务接口(陇南市)
+    shzz_lns:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
+      sid: s_111000000000131433_3737
+      appKey: 5ed5bfa8081a94cfeda63d033868aa05
+    # 基金会法人登记证书查询(陇南市)
+    jjhfr_lns:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
+      sid: s_12100000000018032A_3940
+      appKey: 31e02676a1e9bd44e8eba2f3d61878db
+    # 低保对象信息查询服务(陇南市)
+    db_lns:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
+      sid: s_X01201000200000000_4353
+      appKey: 38c57221b3b00ccdd442ce395c057f08
+    # 殡葬服务火化信息查询(陇南市)
+    bzfw_lns:
+      rid: 7acbccd9-ff09-4d3a-a485-4ac24f94cc5d@df-151
+      sid: s_12100000000018032A_3939
+      appKey: c15766c9b0c1edb12d159074d55d65dd
 
 

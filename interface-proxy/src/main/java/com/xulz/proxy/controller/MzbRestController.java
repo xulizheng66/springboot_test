@@ -5,7 +5,7 @@ import com.inspur.openservice.api.OpenServiceClient;
 import com.inspur.openservice.api.RequestParams;
 import com.inspur.openservice.api.model.ClientException;
 import com.inspur.openservice.api.model.PostParameter;
-import com.xulz.proxy.InterfaceType;
+import com.xulz.proxy.enums.InterfaceType;
 import com.xulz.proxy.commons.Constants;
 import com.xulz.proxy.commons.RedisUtils;
 import com.xulz.proxy.entity.MzbParams;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
+import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +35,7 @@ import java.util.Map;
  * @author: xulz
  * @create: 2018-11-14 16:36
  **/
+
 
 @Api("国家服务接口-民政部REST接口调用")
 @RestController
@@ -115,6 +117,7 @@ public class MzbRestController {
     @Value("${com.mzb.db_fpb.appKey}")
     private String db_fpb_appKey;
 
+
     /**
      * 民政部-REST接口调用(公共方法)
      *
@@ -125,6 +128,7 @@ public class MzbRestController {
      * @param type   接口类型
      * @return
      */
+
     public JSONObject getRestInfoByMzbWithPublic(String rid, String sid, String appKey, MzbParams params, String type) {
 
         String url = authUrl;
@@ -231,9 +235,11 @@ public class MzbRestController {
         return resultJson;
     }
 
+
     /**
      * 重写 民政部发送请求的方法 抛出异常
      */
+
     public String sendRequest(RequestParams requestParam, OpenServiceClient client) throws ClientException {
         String context = requestParam.getContext();
         String version = requestParam.getVersion();
@@ -380,9 +386,11 @@ public class MzbRestController {
         return restInfo;
     }
 
+
     /**
      * 按接口类型（sid）调用
      **/
+
     @RequestMapping(value = "/getHydjxxdr", method = RequestMethod.POST)
     @ApiOperation(value = "民政部-REST接口调用(婚姻登记信息核验（单人）接口)")
     public JSONObject getHydjxxdr(@RequestBody MzbParams mzbParams) {
@@ -520,3 +528,4 @@ public class MzbRestController {
     }
 
 }
+

@@ -1,4 +1,4 @@
-package com.xulz.proxy;
+package com.xulz.proxy.enums;
 
 import com.xulz.proxy.commons.Constants;
 
