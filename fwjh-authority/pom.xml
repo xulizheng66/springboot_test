@@ -8,6 +8,7 @@
         <version>2.1.6.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.xulz</groupId>
     <artifactId>fwjh-authority</artifactId>
     <version>1.0.0</version>

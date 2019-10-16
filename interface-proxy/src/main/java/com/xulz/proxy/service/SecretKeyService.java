@@ -116,10 +116,10 @@ public class SecretKeyService {
 
         JSONObject jsonObject = new JSONObject();
         String rtime = String.valueOf(System.currentTimeMillis());
-            //获取真正的sign
-            String realSecretKey = GetSecretKey.getRealSecretKey(rtime, rid, sid, appKey, firstSign);
-            jsonObject.put("sign", realSecretKey);
-            jsonObject.put("rtime", rtime);
+        //获取真正的sign
+        String realSecretKey = GetSecretKey.getRealSecretKey(rtime, rid, sid, appKey, firstSign);
+        jsonObject.put("sign", realSecretKey);
+        jsonObject.put("rtime", rtime);
         return jsonObject;
     }
 

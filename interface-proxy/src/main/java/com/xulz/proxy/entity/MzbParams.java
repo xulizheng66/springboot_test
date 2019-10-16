@@ -28,5 +28,10 @@ public class MzbParams {
     private String child_name;//儿童姓名
     private String child_idcard;//身份证号码
 
+    /**
+     * 接口编码
+     */
+    private String code;
+
 
 }

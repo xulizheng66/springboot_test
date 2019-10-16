@@ -111,7 +111,7 @@ public class GetSecretKey {
         } else if ("-1".equals(code) || "E-106".equals(code)) {
             //{"code":"-1","data":"","message":"接口调用失败"}
             //请求不存在于数据库授权列表中
-            return "-1";
+            return "notExits";
         } else {
             //系统异常
             return null;

@@ -19,13 +19,9 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
-import javax.validation.constraints.NotBlank;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -128,7 +124,6 @@ public class MzbRestController {
      * @param type   接口类型
      * @return
      */
-
     public JSONObject getRestInfoByMzbWithPublic(String rid, String sid, String appKey, MzbParams params, String type) {
 
         String url = authUrl;
@@ -222,8 +217,8 @@ public class MzbRestController {
             try {
                 jsonStr = this.sendRequest(openServiceParam, client);
             } catch (ClientException e) {
-                log.error("message===================>[{}],[{}]" + e.getMessage());
-                log.error("error===================>" + e.getError());
+                log.error("message===================>[{}]" + e.getMessage());
+                log.error("error===================>[{}}]" + e.getError());
                 log.error("ErrorDescription===================>[{}]" + e.getErrorDescription());
                 resultJson.put("message", "系统异常【" + e.getMessage() + "】");
                 return resultJson;
@@ -404,7 +399,7 @@ public class MzbRestController {
                     mzbParams, InterfaceType.MZB_DR.getType());
             return restInfo;
         }
-        result.put("message", "sid输入有误");
+        result.put("message", "接口编码输入有误");
         return result;
     }
 
@@ -421,7 +416,7 @@ public class MzbRestController {
                     mzbParams, InterfaceType.MZB_SR.getType());
             return restInfo;
         }
-        result.put("message", "sid输入有误");
+        result.put("message", "接口编码输入有误");
         return result;
     }
 
@@ -438,7 +433,7 @@ public class MzbRestController {
                     mzbParams, InterfaceType.MZB_FR.getType());
             return restInfo;
         }
-        result.put("message", "sid输入有误");
+        result.put("message", "接口编码输入有误");
         return result;
     }
 
@@ -455,7 +450,7 @@ public class MzbRestController {
                     mzbParams, InterfaceType.MZB_DB.getType());
             return restInfo;
         }
-        result.put("message", "sid输入有误");
+        result.put("message", "接口编码输入有误");
         return result;
     }
 
@@ -472,7 +467,7 @@ public class MzbRestController {
                     mzbParams, InterfaceType.MZB_BZFW.getType());
             return restInfo;
         }
-        result.put("message", "sid输入有误");
+        result.put("message", "接口编码输入有误");
         return result;
     }
 
@@ -489,7 +484,7 @@ public class MzbRestController {
                     mzbParams, InterfaceType.MZB_LSET.getType());
             return restInfo;
         }
-        result.put("message", "sid输入有误");
+        result.put("message", "接口编码输入有误");
         return result;
     }
 
@@ -506,7 +501,7 @@ public class MzbRestController {
                     mzbParams, InterfaceType.MZB_JJH_FR.getType());
             return restInfo;
         }
-        result.put("message", "sid输入有误");
+        result.put("message", "接口编码输入有误");
         return result;
     }
 
@@ -514,18 +509,37 @@ public class MzbRestController {
     @ApiOperation(value = "民政部-REST接口调用(社会组织信息接口说明)")
     public JSONObject getShzzxx(@RequestBody MzbParams mzbParams) {
         JSONObject result = new JSONObject();
-        if (!StringUtils.isNoneBlank(mzbParams.getOrg_name(), mzbParams.getUsc_code())) {
-            result.put("message", "参数错误，请核实");
-            return result;
-        }
         if (InterfaceType.MZB_SHZZ.getSid().equals(mzbParams.getSid())) {
             JSONObject restInfo = getRestInfoByMzbWithPublic(mzbParams.getRid(), mzbParams.getSid(), mzbParams.getAppkey(),
                     mzbParams, InterfaceType.MZB_SHZZ.getType());
             return restInfo;
         }
-        result.put("message", "sid输入有误");
+        if (!StringUtils.isNoneBlank(mzbParams.getOrg_name(), mzbParams.getUsc_code())) {
+            result.put("message", "参数错误，请核实");
+            return result;
+        }
+        result.put("message", "接口编码输入有误");
         return result;
     }
 
+    @RequestMapping(value = "/test", method = RequestMethod.POST)
+    @ApiOperation(value = "民政部-REST接口调用(社会组织信息接口说明)")
+    public JSONObject test(@RequestBody MzbParams mzbParams, @RequestHeader String rid, @RequestHeader String sid,
+                           @RequestHeader String appkey) {
+
+        log.info(mzbParams.getCert_num_man());
+        log.info(mzbParams.getName_man());
+        log.info(rid);
+        log.info(sid);
+        log.info(appkey);
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("cert_num_man", mzbParams.getCert_num_man());
+        jsonObject.put("name_man", mzbParams.getName_man());
+        jsonObject.put("rid", rid);
+        jsonObject.put("sid", sid);
+        jsonObject.put("appkey", appkey);
+        return jsonObject;
+    }
 }
 

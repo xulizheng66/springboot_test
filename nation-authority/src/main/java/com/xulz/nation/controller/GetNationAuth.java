@@ -44,11 +44,20 @@ public class GetNationAuth extends BaseController {
             @ApiParam(value = "appkey（服务授权码）", required = true) @RequestParam String appkey) {
         log.info("国家鉴权获取开始...");
         String rtime = String.valueOf(System.currentTimeMillis());
-        // 国家接口获取到的secretKey当天有效
         String sign = GetSecretKey.getSign(sid, rid, rtime, appkey);
         if (StringUtils.isNotBlank(sign)) {
-            String firstSign = GetSecretKey.getSecretKey(url, rid, sid, rtime, sign);
-            if (StringUtils.isNotBlank(firstSign) && !firstSign.equals("-1")) {
+            // 国家接口获取到的secretKey当天有效
+            String firstSign = null;
+            // 首先去redis 中去取，存在则直接返回，不存在再调国家接口
+            boolean exists = redisUtils.exists("nation:" + rid + "@" + sid + "@" + appkey);
+            if (exists) {
+                NationInterface info = (NationInterface) redisUtils.get("nation:" + rid + "@" + sid + "@" + appkey);
+                firstSign = info.getRealSecretKey();
+            } else {
+                // 调用远程接口，获取firstSign
+                firstSign = GetSecretKey.getSecretKey(url, rid, sid, rtime, sign);
+            }
+            if (StringUtils.isNotBlank(firstSign) && !("notExits".equals(firstSign))) {
                 NationInterface nationInterface = getTokenFromRedis(rid, sid, rtime, appkey, firstSign);
                 log.info("国家鉴权获取成功...\n" + nationInterface.toString());
                 log.info("获取真正的密钥开始...\n");
@@ -79,7 +88,7 @@ public class GetNationAuth extends BaseController {
         }
         // 当前时间
         Date now = DateUtil.date();
-        // 到今天12点的时间
+        // 今天12点的时间
         Date endOfDay = DateUtil.endOfDay(now);
         // 相差时间 毫秒
         long period = DateUtil.between(now, endOfDay, DateUnit.MS);

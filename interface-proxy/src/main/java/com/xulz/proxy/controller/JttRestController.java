@@ -49,7 +49,7 @@ public class JttRestController {
         jttParams.setRestClienturl(restClientUrl);
         jttParams.setRequestPath(requestPath);
         RestClient restClient = JttRestClient.getRestClient(jttParams);
-        log.info("交通厅接口调用--->登录成功");
+        log.info("交通厅接口--->登录成功");
         RestResult result2 = null;
         if (restClient != null) {
             Map<String, Object> params = new HashMap<String, Object>();
@@ -59,7 +59,7 @@ public class JttRestController {
             // dataShareChange/getShareInfoByToken路径保持不变
             // params要满足共享测试里面条件要求
             result2 = restClient.post(jttParams.getRequestPath(), params);
-            System.out.println(result2.getDataAsString());
+            log.info("[result]:{}", result2.getDataAsString());
         }
         return result2;
     }

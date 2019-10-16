@@ -92,8 +92,7 @@ public class GetSecretKeyByFwjhController {
         try {
             // 设置请求头
             HttpHeaders headers = new HttpHeaders();
-            MediaType mediaType = MediaType.parseMediaType("application/json;charset=UTF-8");
-            headers.setContentType(mediaType);
+            headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
             headers.add("Accept", MediaType.APPLICATION_JSON.toString());
 
             headers.add("gateway_appid", appId);// header参数，应用id
@@ -147,7 +146,7 @@ public class GetSecretKeyByFwjhController {
      * 使用（appKey）对返回数据中的body的refresh_token进行解密（ASE 算法），最终获得真正秘钥的过程。
      *
      * @param appKey
-     * @param access_token
+     * @param refresh_token
      * @return
      */
     @RequestMapping(value = "/getRefreshKeyByFwjh", method = RequestMethod.POST)
@@ -244,11 +243,11 @@ public class GetSecretKeyByFwjhController {
     /**
      * http请求过程(这里为调用服务)
      *
-     * @param requestUrl       请求的url，在服务调用过程中url为获取token的url（格式为ip:port/auth/token）或者是服务调用的url
-     * @param requestMethod    获取token时，请求方法为POST；调用服务是请求方法依据服务注册时定义。
-     * @param appIdorSecretKey 获取token时该参数为appId；抵用服务时该参数为SecretKey
-     * @param currTime         该参数为当前时间
-     * @param sign             该参数为head参数gateway_sig，由秘钥生成方法gatewaySignEncode生成。
+     * @param requestUrl    请求的url，在服务调用过程中url为获取token的url（格式为ip:port/auth/token）或者是服务调用的url
+     * @param requestMethod 获取token时，请求方法为POST；调用服务是请求方法依据服务注册时定义。
+     * @param gateway_appid 获取token时该参数为appId；抵用服务时该参数为SecretKey
+     * @param gateway_rtime 该参数为当前时间
+     * @param gateway_sig   该参数为head参数gateway_sig，由秘钥生成方法gatewaySignEncode生成。
      * @return
      */
     @RequestMapping(value = "/getInfoByFwjh", method = RequestMethod.POST)
