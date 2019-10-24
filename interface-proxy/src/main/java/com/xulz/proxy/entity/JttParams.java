@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 /**
  * @Description: TODO
  * @Author xulz
@@ -20,7 +24,10 @@ public class JttParams {
     // 格式:yyymmdd
     private String timekey;
     // 服务唯一有效凭证
+    @NotBlank(message = "token不能为空")
     private String token;
+    @NotNull(message = "pageNo不能为空")
     private Integer pageNo;
+    @NotNull(message = "pageSize不能为空")
     private Integer pageSize;
 }

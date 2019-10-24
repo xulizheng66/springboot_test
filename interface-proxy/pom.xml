@@ -151,21 +151,32 @@
             <scope>provided</scope>
         </dependency>
         <!-- 国家接口民政部sdk -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.mzb</groupId>
             <artifactId>sdk</artifactId>
             <version>1.0.0</version>
             <systemPath>${basedir}/src/main/resources/sdk/sdk-1.0.0.jar</systemPath>
             <scope>system</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>com.mzb</groupId>
+            <artifactId>sdk</artifactId>
+            <version>1.0</version>
         </dependency>
         <!-- 国家接口交通厅sdk -->
         <dependency>
             <groupId>com.jtt</groupId>
             <artifactId>sdk</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <!-- 随项目打包 -->
+       <!-- <dependency>
+            <groupId>com.jtt</groupId>
+            <artifactId>sdk</artifactId>
             <version>1.0.0</version>
             <systemPath>${basedir}/src/main/resources/sdk/com.jiuqi.bi.rest.runtime.jar</systemPath>
             <scope>system</scope>
-        </dependency>
+        </dependency>-->
         <!-- java 调用webservice接口（asmx） -->
         <dependency>
             <groupId>axis</groupId>

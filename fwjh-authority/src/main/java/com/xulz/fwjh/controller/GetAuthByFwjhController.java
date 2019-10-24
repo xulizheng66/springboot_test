@@ -90,8 +90,8 @@ public class GetAuthByFwjhController {
                     String secretKey = SymmetricEncoderByFwjh.AESDncode(appKey, accessToken);
                     // 3.获取调用服务realSign
                     String realSign = GetSecretKeyByFwjh.gatewaySignEncode(appId, secretKey, gateway_rtime);
-                    // 从redis获取token
-                    FwjhEntity token = getTokenFromRedis(appId, appKey, gateway_rtime, realSign, expiresIn);
+                    // 从redis获取token(默认有效期为10分钟)
+                    FwjhEntity token = getTokenFromRedis(appId, appKey, gateway_rtime, realSign, "580");
                     // 封装调用服务需要的参数
                     jsonObject.put("gateway_appid", token.getAppId());
                     jsonObject.put("gateway_sig", token.getSign());
@@ -132,11 +132,6 @@ public class GetAuthByFwjhController {
         return entity;
     }
 
- /*   @PostMapping("test")
-    public FwjhEntity test(){
-        FwjhEntity tokenFromRedis = getTokenFromRedis("1324", "1234", "3452545243", "55555555555", "666666");
-        return tokenFromRedis;
-    }*/
 
 
 }

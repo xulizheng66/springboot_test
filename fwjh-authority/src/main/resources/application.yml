@@ -1,10 +1,2 @@
 server:
   port: 8802
-
-# 自定义参数
-request:
-  # 获取省平台鉴权
-  token:
-    url: http://59.219.205.162/proxy/auth/token
-    appId: 9963977c7d8d4943ba3a3d68f5167ec4 #应用id
-    appKey: OTk2Mzk3N2M3ZDhkNDk0M2JhM2EzZDY4ZjUxNjdlYzQ6MTIzNDU2 #应用公钥

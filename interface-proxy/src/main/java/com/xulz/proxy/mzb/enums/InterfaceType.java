@@ -1,4 +1,4 @@
-package com.xulz.proxy.enums;
+package com.xulz.proxy.mzb.enums;
 
 import com.xulz.proxy.commons.Constants;
 
@@ -24,7 +24,7 @@ public enum InterfaceType {
     private String sid;
     private String type;
 
-    private InterfaceType(String sid, String type) {
+    InterfaceType(String sid, String type) {
         this.sid = sid;
         this.type = type;
     }

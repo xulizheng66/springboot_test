@@ -1,4 +1,4 @@
-package com.xulz.proxy.controller;
+package com.xulz.proxy.mzb.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xulz.proxy.client.WebClient;

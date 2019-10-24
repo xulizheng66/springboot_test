@@ -1,15 +1,15 @@
-package com.xulz.proxy.controller;
+package com.xulz.proxy.mzb.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.inspur.openservice.api.OpenServiceClient;
 import com.inspur.openservice.api.RequestParams;
 import com.inspur.openservice.api.model.ClientException;
 import com.inspur.openservice.api.model.PostParameter;
-import com.xulz.proxy.enums.InterfaceType;
 import com.xulz.proxy.commons.Constants;
 import com.xulz.proxy.commons.RedisUtils;
 import com.xulz.proxy.entity.MzbParams;
-import com.xulz.proxy.service.SecretKeyService;
+import com.xulz.proxy.mzb.enums.InterfaceType;
+import com.xulz.proxy.mzb.service.SecretKeyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
@@ -382,8 +382,9 @@ public class MzbRestController {
     }
 
 
+    /** ====================================分割线=======================================  **/
     /**
-     * 按接口类型（sid）调用
+     * 根据接口类型（sid）调用
      **/
 
     @RequestMapping(value = "/getHydjxxdr", method = RequestMethod.POST)
@@ -541,5 +542,7 @@ public class MzbRestController {
         jsonObject.put("appkey", appkey);
         return jsonObject;
     }
+
+
 }
 
