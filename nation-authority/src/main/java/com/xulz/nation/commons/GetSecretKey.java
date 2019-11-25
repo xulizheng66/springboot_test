@@ -44,13 +44,11 @@ public class GetSecretKey {
             byte[] keyBytes = appKey.getBytes("UTF-8");
             hmacSha256.init(new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA256"));
 
-
             String inputString = sid + rid + rtime;
             System.out.println("INPUT: " + inputString);
 
             byte[] hmacSha256Bytes = hmacSha256.doFinal(inputString.getBytes("UTF-8"));
-            sign = new String(Base64.encodeBase64(hmacSha256Bytes),
-                    "UTF-8");
+            sign = new String(Base64.encodeBase64(hmacSha256Bytes), "UTF-8");
             System.out.println("OUTPUT: " + sign);
 
         } catch (NoSuchAlgorithmException e) {
@@ -133,22 +131,22 @@ public class GetSecretKey {
         System.out.println("sid====>" + sid);
         System.out.println("appkey====>" + appkey);
         System.out.println("secretKey====>" + secretKey);
+        // 3. 解密
         String appsecret = SymmetricEncoder.AESDncode(appkey, secretKey);
 
         String realSecretKey = "";
         try {
-
+            // 4.获取真正的密钥
             Mac hmacSha256 = Mac.getInstance("HmacSHA256");
             byte[] keyBytes = appsecret.getBytes("UTF-8");
             hmacSha256.init(new SecretKeySpec(keyBytes, 0, keyBytes.length, "HmacSHA256"));
             String inputString = sid + rid + rtime;
             System.out.println("INPUT: " + inputString);
-            byte[] hmacSha256Bytes = hmacSha256.doFinal(inputString
-                    .getBytes("UTF-8"));
+            byte[] hmacSha256Bytes = hmacSha256.doFinal(inputString.getBytes("UTF-8"));
             String sign = new String(Base64.encodeBase64(hmacSha256Bytes),
                     "UTF-8");
-            System.out.println("rid:" + rid + "\nsid:" + sid + "\nrttime:"
-                    + rtime + "\nsign:" + sign);
+            System.out.println("rid:" + rid + "\n sid:" + sid + "\n rttime:"
+                    + rtime + "\n sign:" + sign);
 
             realSecretKey = sign;
         } catch (Exception e) {

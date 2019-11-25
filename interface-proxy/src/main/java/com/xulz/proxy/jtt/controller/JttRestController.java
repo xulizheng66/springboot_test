@@ -13,6 +13,7 @@ import com.xulz.proxy.jtt.enums.ResultEnum;
 import com.xulz.proxy.jtt.util.HttpClientUtil;
 import com.xulz.proxy.jtt.util.ResultVOUtil;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -60,7 +61,7 @@ public class JttRestController {
         if (bindingResult.hasErrors()) {
             log.error("请求参数不正确, jttParams={}", jttParams);
             String defaultMessage = bindingResult.getFieldError().getDefaultMessage();
-            result.setStatusCode(Integer.parseInt(Constants.SysCode.REQ_PARAM_ERROR.getCode()));
+            result.setStatusCode(ResultEnum.INPUT_PARAMS_ERROR.getCode());
             result.setStatusText(defaultMessage);
             return result;
         }
@@ -173,17 +174,16 @@ public class JttRestController {
 
     @PostMapping("queryInfo")
     public JSONObject queryInfo(@Valid @RequestBody Params inputParams, BindingResult bindingResult) {
-
+        log.info("交通厅接口调用开始...");
         JSONObject jsonResult = new JSONObject();
-
         // 参数校验
         if (bindingResult.hasErrors()) {
             log.error("请求参数不正确, inputParams={}", inputParams);
             String message = bindingResult.getFieldError().getDefaultMessage();
-            jsonResult.put(ResultEnum.INPUT_PARAMS_ERROR.getCode().toString(), message);
+            jsonResult.put("code", ResultEnum.INPUT_PARAMS_ERROR.getCode());
+            jsonResult.put("msg", message);
             return jsonResult;
         }
-        log.info("交通厅接口调用开始...");
         Map<String, Object> params = new HashMap<String, Object>(10);
         //一个token对应一个接口
         params.put("token", inputParams.getToken());
@@ -200,7 +200,8 @@ public class JttRestController {
         params.put("user", Constants.JTT.USER);
         params.put("pwd", Constants.JTT.PWD);
         // 根据token增加参数
-        if (inputParams.getToken().equals(Constants.JTT.SJTSYT_LYKY)) {
+        if (inputParams.getToken().equals(Constants.JTT.SJTSYT_LYKY)
+                && StringUtils.isNotBlank(inputParams.getTimekey())) {
             // 旅游客运车辆动态信息
             params.put("timekey", inputParams.getTimekey());
         }
@@ -219,14 +220,21 @@ public class JttRestController {
                 jsonResult = JSONObject.parseObject(result.getBody());
                 return jsonResult;
             }
-            jsonResult.put(ResultEnum.CALL_REMOTE_ERROR.getCode().toString(), ResultEnum.CALL_REMOTE_ERROR.getMsg());
+            jsonResult.put("code", ResultEnum.CALL_REMOTE_ERROR.getCode());
+            jsonResult.put("msg", ResultEnum.CALL_REMOTE_ERROR.getMsg());
             return jsonResult;
         } catch (RestClientException e) {
             log.error("[接口调用异常],异常信息：{}", e.getMessage());
-            jsonResult.put(ResultEnum.CALL_REMOTE_ERROR.getCode().toString(),
-                    ResultEnum.CALL_REMOTE_ERROR.getMsg() + "，异常信息：" + e.getMessage());
+            jsonResult.put("code", ResultEnum.CALL_REMOTE_ERROR.getCode());
+            jsonResult.put("msg", ResultEnum.CALL_REMOTE_ERROR.getMsg() + "，异常信息：" + e.getMessage());
             return jsonResult;
         }
+    }
+
+    @PostMapping("queryInfo1")
+    public Params queryInfo1(@Valid @RequestBody Params params) {
+        System.out.println("params = " + params.toString());
+        return params;
     }
 
 

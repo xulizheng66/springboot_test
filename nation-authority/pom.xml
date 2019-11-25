@@ -10,7 +10,7 @@
     </parent>
     <groupId>com.xulz</groupId>
     <artifactId>nation-authority</artifactId>
-    <version>1.0.0</version>
+    <version>1.0</version>
     <name>nation-authority</name>
     <description>Demo project for Spring Boot</description>
 
@@ -71,6 +71,10 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
         </dependency>
     </dependencies>
 

@@ -3,7 +3,8 @@ server:
 
 spring:
   redis:
-    host: localhost
+    host: 10.50.108.43
+#    host: localhost
     port: 6379
   mvc:
     view:

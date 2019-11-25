@@ -8,6 +8,7 @@
 	<artifactId>webservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
+	<!--<packaging>war</packaging>-->
 
 	<name>webservice</name>
 	<description>Demo project for Spring Boot</description>
@@ -90,8 +91,9 @@
 			<version>1.4.1.RELEASE</version>
 		</dependency>
 		<!-- spring session的依赖(session共享) -->
-		<!--<dependency> <groupId>org.springframework.session</groupId> <artifactId>spring-session-data-redis</artifactId> 
-			</dependency> -->
+		<!--<dependency> <groupId>org.springframework.session</groupId>
+		    <artifactId>spring-session-data-redis</artifactId>
+		</dependency> -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>httpclient</artifactId>

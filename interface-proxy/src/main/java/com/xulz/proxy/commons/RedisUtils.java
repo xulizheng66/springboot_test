@@ -2,7 +2,7 @@ package com.xulz.proxy.commons;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,12 +14,9 @@ import java.util.concurrent.TimeUnit;
  * @Description: ${todo}
  * @date 2018/7/915:42
  */
-//@Component
-@Service
-@SuppressWarnings("unchecked")
+@Component
 public class RedisUtils {
 
-    @SuppressWarnings("rawtypes")
     @Autowired
     private RedisTemplate redisTemplate;
 

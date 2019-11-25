@@ -1,6 +1,5 @@
-package com.xulz.nation.controller;
+package com.xulz.nation.gs;
 
-import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUnit;
 import cn.hutool.core.date.DateUtil;
 import com.alibaba.fastjson.JSONObject;
@@ -15,23 +14,23 @@ import io.swagger.annotations.ApiParam;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @Description: 获取国家交换平台鉴权
- * @Author: xulz
- * @Date： 2019/9/19 14:22
- * @version: 1.0
+ * @author: xulz
+ * @date: 2019/11/22 11:18
  */
-@Api(value = "获取国家交换平台鉴权",tags = {"获取国家交换平台鉴权"})
+@Api(value = "gs",tags = {"gs"})
 @Log4j2
 @RestController
-@RequestMapping("/nation")
-public class GetNationAuth extends BaseController {
+@RequestMapping("/gs")
+public class GsController extends BaseController {
 
     @Autowired
     RedisUtils redisUtils;
@@ -45,24 +44,16 @@ public class GetNationAuth extends BaseController {
             @ApiParam(value = "sid（服务编码）", required = true) @RequestParam String sid,
             @ApiParam(value = "appkey（服务授权码）", required = true) @RequestParam String appkey) {
         log.info("国家鉴权获取开始...");
+        // 1.调用 HmacSHA256
         String rtime = String.valueOf(System.currentTimeMillis());
         String sign = GetSecretKey.getSign(sid, rid, rtime, appkey);
         if (StringUtils.isNotBlank(sign)) {
-            // 国家接口获取到的secretKey当天有效
-            String firstSign = null;
-            // 首先去 redis 中去取，存在则直接返回，不存在再调国家接口
-            boolean exists = redisUtils.exists("nation:" + rid + "@" + sid + "@" + appkey);
-            if (exists) {
-                NationInterface info = (NationInterface) redisUtils.get("nation:" + rid + "@" + sid + "@" + appkey);
-                firstSign = info.getRealSecretKey();
-            } else {
-                // 调用远程接口，获取firstSign
-                firstSign = GetSecretKey.getSecretKey(url, rid, sid, rtime, sign);
-            }
+            // 2.调用远程接口，获取firstSign
+            String firstSign = GetSecretKey.getSecretKey(url, rid, sid, rtime, sign);
             if (StringUtils.isNotBlank(firstSign) && !("notExits".equals(firstSign))) {
-                NationInterface nationInterface = getTokenFromRedis(rid, sid, rtime, appkey, firstSign);
-                log.info("国家鉴权获取成功...\n" + nationInterface.toString());
+                log.info("国家鉴权获取成功...\n");
                 log.info("获取真正的密钥开始...\n");
+                // 3. 4.
                 String realSecretKey = GetSecretKey.getRealSecretKey(rtime, rid, sid, appkey, firstSign);
                 // 返回结果
                 JSONObject result = new JSONObject();
@@ -82,33 +73,5 @@ public class GetNationAuth extends BaseController {
         log.error("系统异常，hmacsha256 计算失败");
         return returnError("系统异常，hmacsha256 计算失败");
     }
-
-    /**
-     * 将当天的密钥保存到redis
-     */
-    private NationInterface getTokenFromRedis(String rid, String sid, String rtime, String appkey, String secretKey) {
-        NationInterface ni = (NationInterface) redisUtils.get("nation:" + rid + "@" + sid + "@" + appkey);
-        if (null != ni) {
-            return ni;
-        }
-        // 当前时间
-        Date now = DateUtil.date();
-        // 今天12点的时间
-        Date endOfDay = DateUtil.endOfDay(now);
-        // 相差时间 毫秒
-        long period = DateUtil.between(now, endOfDay, DateUnit.MS);
-        // 存入redis 避免重复获取
-        NationInterface nationInterface = new NationInterface();
-        nationInterface.setRtime(rtime);
-        nationInterface.setRealSecretKey(secretKey);
-        nationInterface.setAppkey(appkey);
-        nationInterface.setSid(sid);
-        nationInterface.setRid(rid);
-        redisUtils.set("nation:" + rid + "@" + sid + "@" + appkey, nationInterface, period, TimeUnit.MILLISECONDS);
-        return nationInterface;
-    }
-    
-
-
 
 }

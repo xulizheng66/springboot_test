@@ -19,6 +19,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -42,6 +43,8 @@ public class MzbRestController {
     private RestTemplate restTemplate;
     @Autowired
     private RedisUtils redisUtils;
+    @Autowired
+    private StringRedisTemplate redisTemplate;
     @Autowired
     SecretKeyService secretKeyService;
     //获取国家鉴权地址
@@ -126,9 +129,8 @@ public class MzbRestController {
      */
     public JSONObject getRestInfoByMzbWithPublic(String rid, String sid, String appKey, MzbParams params, String type) {
 
-        String url = authUrl;
         // 获取国家鉴权 (当日有效)
-        JSONObject secretKeyByNation = secretKeyService.getSecretKeyByNation(url, rid, sid, appKey);
+        JSONObject secretKeyByNation = secretKeyService.getSecretKeyByNation(authUrl, rid, sid, appKey);
         // 返回json对象后，message 为错误信息   sign 为正确信息
         String error = secretKeyByNation.getString("message");
         String firstSign = secretKeyByNation.getString("sign");
@@ -382,6 +384,7 @@ public class MzbRestController {
     }
 
 
+
     /** ====================================分割线=======================================  **/
     /**
      * 根据接口类型（sid）调用
@@ -542,6 +545,19 @@ public class MzbRestController {
         jsonObject.put("appkey", appkey);
         return jsonObject;
     }
+
+
+    @RequestMapping(value = "/redisTest", method = RequestMethod.POST)
+    public String redisTest() {
+        boolean flag = redisUtils.set("fwjh:test", "test");
+        if (flag) {
+            String o = String.valueOf(redisUtils.get("fwjh:test"));
+            return String.valueOf(o);
+        }
+        return "redis存入失败！";
+    }
+
+
 
 
 }
